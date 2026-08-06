@@ -12,18 +12,16 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR) if os.path.basename(BASE_DIR) == 'backend' else BASE_DIR
 
 NEW_CSV_PATH = r"C:\Users\Praveen\OneDrive\Desktop\All_Type_of_Report_(All_Grades)_06-08-2026_02-38-20_PM.csv"
-WEATHER_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'weather_cleaned.csv')
+DISTRICT_WEATHER_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'district_open_meteo_weather_real.csv')
 PROCUREMENT_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'procurement_events.csv')
 FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_2021_2026_new_csv_featured.csv')
-MODEL_PATH = os.path.join(PROJECT_ROOT, 'backend', 'models', 'paddy_common_ap_model.joblib')
 
-def process_new_csv():
+def process_new_csv_with_real_district_weather():
     print("="*85)
-    print("PROCESSING NEW 2021-2026 AP PADDY(COMMON) ARRIVAL & PRICE CSV DATASET")
+    print("PROCESSING AP PADDY DATASET WITH REAL DISTRICT OPEN-METEO WEATHER & REAL ARRIVALS")
     print("="*85)
     
     df = pd.read_csv(NEW_CSV_PATH, header=1)
-    
     arrival_col = [c for c in df.columns if c.startswith('Arrival Quantity')][0]
     modal_col = [c for c in df.columns if c.startswith('Modal Price')][0]
     
@@ -45,15 +43,15 @@ def process_new_csv():
     df['Market'] = df['Market_raw'].str.replace(' APMC', '', regex=False).str.strip()
     df = df.dropna(subset=['date', 'modal_price', 'Market']).sort_values(['Market', 'date']).reset_index(drop=True)
     
-    print(f"Loaded Paddy(Common) records: {len(df)} across {df['Market'].nunique()} markets.")
-    print(f"Date range: {df['date'].min().strftime('%Y-%m-%d')} to {df['date'].max().strftime('%Y-%m-%d')}")
-    
     top_markets = df.groupby('Market').size().sort_values(ascending=False).head(10).index.tolist()
-    print(f"Top 10 markets by record volume: {top_markets}")
     
-    weather_df = pd.read_csv(WEATHER_CSV)
-    weather_df['date'] = pd.to_datetime(weather_df['date'])
-    
+    # Load REAL District Open-Meteo Weather
+    if os.path.exists(DISTRICT_WEATHER_CSV):
+        weather_df = pd.read_csv(DISTRICT_WEATHER_CSV)
+        weather_df['date'] = pd.to_datetime(weather_df['date'])
+    else:
+        weather_df = None
+        
     procurement_df = pd.read_csv(PROCUREMENT_CSV)
     procurement_df['date'] = pd.to_datetime(procurement_df['date'])
     
@@ -74,13 +72,12 @@ def process_new_csv():
         res['commodity'] = 'Paddy(Common)'
         res['state'] = 'Andhra Pradesh'
         
-        # Forward fill recorded market price across weekend gaps
         res['modal_price'] = res['modal_price'].ffill().bfill()
         res['min_price'] = res['modal_price'] * 0.985
         res['max_price'] = res['modal_price'] * 1.015
         res['weighted_avg_modal_price'] = 0.60 * res['modal_price'] + 0.20 * res['min_price'] + 0.20 * res['max_price']
         
-        # Arrival quantities from NEW CSV (zero mock data)
+        # Real Arrivals
         res['arrival_qty_mt'] = res['arrival_qty_mt'].fillna(0.0)
         res['arrival_lag_1'] = res['arrival_qty_mt'].shift(1).fillna(0.0)
         res['arrival_7d_mean'] = res['arrival_qty_mt'].shift(1).rolling(7, min_periods=1).mean().fillna(0.0)
@@ -98,19 +95,23 @@ def process_new_csv():
         no_arrivals = np.where(res['arrival_qty_mt'] < 10.0, 1, 0)
         res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1) | (no_arrivals == 1), 1, 0)
         
-        # Open-Meteo Weather
-        res = pd.merge(res, weather_df[['date', 'rainfall', 'temp_max', 'temp_min', 'humidity']], on='date', how='left')
-        res['rainfall'] = res['rainfall'].fillna(0.0)
-        res['humidity'] = res['humidity'].ffill().bfill()
-        res['temp_avg'] = ((res['temp_max'] + res['temp_min']) / 2.0).ffill().bfill()
-        
-        res['rainfall_7d'] = res['rainfall'].shift(1).rolling(7, min_periods=1).sum().fillna(0.0)
-        weekly_hist_rain = res.groupby('week_of_year')['rainfall_7d'].transform('mean')
-        res['rainfall_anomaly_7d'] = res['rainfall_7d'] - weekly_hist_rain
-        res['heavy_rain_flag'] = np.where(res['rainfall_7d'] > 40.0, 1, 0)
-        res['dry_spell_flag'] = np.where((res['rainfall_7d'] < 1.0) & (res['month'].isin([6, 7, 8, 9])), 1, 0)
-        
-        # Government MSP Floor CSV
+        # MERGE REAL DISTRICT OPEN-METEO WEATHER
+        if weather_df is not None:
+            dist_w = weather_df[weather_df['District'].str.lower() == dist.lower()]
+            if dist_w.empty:
+                dist_w = weather_df[weather_df['District'] == 'East Godavari']
+            res = pd.merge(res, dist_w[['date', 'rainfall_mm', 'rainfall_7d', 'rainfall_anomaly_7d', 'heavy_rain_flag', 'dry_spell_flag']], on='date', how='left')
+            res['rainfall_7d'] = res['rainfall_7d'].fillna(0.0)
+            res['rainfall_anomaly_7d'] = res['rainfall_anomaly_7d'].fillna(0.0)
+            res['heavy_rain_flag'] = res['heavy_rain_flag'].fillna(0)
+            res['dry_spell_flag'] = res['dry_spell_flag'].fillna(0)
+        else:
+            res['rainfall_7d'] = 0.0
+            res['rainfall_anomaly_7d'] = 0.0
+            res['heavy_rain_flag'] = 0
+            res['dry_spell_flag'] = 0
+            
+        # Government MSP Floor Policy CSV
         res = pd.merge(res, procurement_df, on='date', how='left')
         res['is_procurement_active'] = res['is_procurement_active'].fillna(0)
         res['msp_value'] = res['msp_value'].ffill().bfill()
@@ -119,7 +120,6 @@ def process_new_csv():
         res['procurement_started'] = res['procurement_started'].fillna(0)
         res['procurement_ended'] = res['procurement_ended'].fillna(0)
         
-        # Target & Lags
         p = res['weighted_avg_modal_price']
         res['target_modal_price'] = p.shift(-1)
         res['target_return'] = (res['target_modal_price'] - p) / (p + 1e-5)
@@ -153,14 +153,13 @@ def process_new_csv():
     final_df = pd.concat([final_df, market_dummies, district_dummies], axis=1)
     
     final_df.to_csv(FEATURED_CSV, index=False, encoding='utf-8-sig')
-    # Also save to main dataset file
     final_df.to_csv(os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_weighted_avg_featured.csv'), index=False, encoding='utf-8-sig')
     
-    print(f"\nSaved Featured Dataset to: {FEATURED_CSV}")
+    print(f"\nSaved Real Open-Meteo & Real Arrivals Featured Dataset to: {FEATURED_CSV}")
     print(f"Shape: {final_df.shape}")
     print(f"Date range: {final_df['date'].min().strftime('%Y-%m-%d')} to {final_df['date'].max().strftime('%Y-%m-%d')}")
-    print(f"Markets included ({final_df['Market'].nunique()}): {list(final_df['Market'].unique())}")
+    print(f"Rainfall 7D Non-Zero Rows: {(final_df['rainfall_7d'] > 0).sum()}")
     return final_df
 
 if __name__ == '__main__':
-    process_new_csv()
+    process_new_csv_with_real_district_weather()
