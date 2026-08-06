@@ -1,0 +1,714 @@
+﻿date,state,District,Market,commodity,variety,grade,min_price,max_price,modal_price
+2025-11-05,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2389.0,2399.0,2399.0
+2025-11-10,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-12,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-12,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-13,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-14,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-14,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-16,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-18,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-19,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-19,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-20,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-21,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-22,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-22,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-24,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-25,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-25,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-28,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-29,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-11-30,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-01,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-06,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-06,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-16,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-30,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-31,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2025-12-31,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-01-02,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-01-03,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-03-18,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-03-19,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-20,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-22,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-23,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-24,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-25,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-26,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-28,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-03-28,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2369.0
+2026-03-29,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-03-30,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-03-31,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-01,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-01,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-01,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-01,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-02,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-02,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-02,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-03,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-03,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-05,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-05,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-05,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-06,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-07,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-07,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-08,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-09,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-09,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-09,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-10,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-10,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-10,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-12,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-12,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-13,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-13,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-14,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-14,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-14,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-15,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-15,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-15,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-16,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-16,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-16,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-16,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-17,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-17,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-17,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-17,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-18,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-18,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-19,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-19,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-20,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-20,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-20,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-21,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-22,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-23,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-24,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-24,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-25,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-25,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-25,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-26,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-27,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-27,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-28,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-28,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-29,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-29,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-29,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-30,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-30,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-04-30,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-01,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-01,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-01,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-02,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-03,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-03,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-04,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-04,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-04,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-05,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-05,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-06,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-06,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-06,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-06,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-07,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-05-07,Andhra Pradesh,East Godavari,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2379.0,2379.0
+2026-07-22,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-23,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-24,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-25,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-26,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-27,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-30,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-07-31,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-08-01,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-08-03,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-08-03,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-08-04,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-08-06,Andhra Pradesh,Kakinada,Jaggampet,Paddy(Common),Common,FAQ,2369.0,2380.0,2369.0
+2026-05-30,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-01,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-01,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-02,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-03,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-04,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-05,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-06,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-09,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-10,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-11,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-12,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-16,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-17,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-17,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-18,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-19,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-22,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-22,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-23,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-23,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-24,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-25,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-25,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-26,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-29,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-06-30,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-01,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-02,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-02,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-03,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-03,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-04,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-06,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-07,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-08,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-09,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-09,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-10,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-11,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-11,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-13,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-13,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-14,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2400.0,2400.0,2400.0
+2026-07-15,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-20,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-22,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-23,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-27,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-28,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-30,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-07-31,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-08-03,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-08-03,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-08-04,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-08-04,Andhra Pradesh,East Godavari,Kovvur,Paddy(Common),MTU-1010,Grade Range-2,2441.0,2441.0,2441.0
+2026-06-01,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-02,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-03,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-03,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-04,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-04,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-05,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-06,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-08,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-08,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-09,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-11,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-12,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-12,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-15,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-16,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-19,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-23,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-24,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-25,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-27,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-29,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-06-30,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-01,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-02,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-03,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-06,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-07,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-08,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-08,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-09,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-10,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-12,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-13,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-13,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-14,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2400.0,2500.0,2450.0
+2026-07-15,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2600.0,2700.0,2650.0
+2026-07-15,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2600.0,2700.0,2650.0
+2026-07-20,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2800.0,3000.0,2900.0
+2026-07-21,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2700.0,2900.0,2800.0
+2026-07-21,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,2700.0,2900.0,2800.0
+2026-07-23,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3200.0,3400.0,3300.0
+2026-07-24,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3300.0,3500.0,3400.0
+2026-07-24,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3300.0,3500.0,3400.0
+2026-07-25,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-07-27,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-07-28,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3100.0,3300.0,3200.0
+2026-07-28,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3100.0,3300.0,3200.0
+2026-07-29,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3200.0,3400.0,3300.0
+2026-07-30,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3200.0,3400.0,3300.0
+2026-07-31,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3300.0,3500.0,3400.0
+2026-07-31,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3300.0,3500.0,3400.0
+2026-08-01,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-08-01,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-08-03,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3200.0,3400.0,3300.0
+2026-08-03,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3200.0,3400.0,3300.0
+2026-08-04,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-08-04,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-08-05,Andhra Pradesh,Bapatla,Kuchinapudi,Paddy(Common),B P T,Local,3000.0,3200.0,3100.0
+2026-05-27,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-27,Andhra Pradesh,Krishna,Mylavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-27,Andhra Pradesh,Krishna,Mylavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-29,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-05-29,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-05-30,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-01,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-02,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-03,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-04,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-05,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-08,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-09,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-10,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-10,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-11,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-11,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-12,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-15,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-16,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-18,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-20,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-22,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-23,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-23,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-24,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-25,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-27,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-29,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-06-29,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-01,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-02,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-03,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-04,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-06,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-06,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-07,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-07,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-09,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-09,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-10,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-13,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-14,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-15,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-15,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-17,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-07-18,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-18,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-20,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-21,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-21,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-22,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-22,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-23,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-24,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-25,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-25,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-26,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-27,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-27,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-28,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-29,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-30,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-07-31,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-08-02,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-08-03,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-08-04,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-08-05,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-08-06,Andhra Pradesh,NTR,Mylavaram,Paddy(Common),1001,FAQ,2369.0,2369.0,2369.0
+2026-05-30,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1800.0,1800.0,1800.0
+2026-05-31,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1800.0,1800.0,1800.0
+2026-06-01,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1800.0,1800.0,1800.0
+2026-06-02,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1800.0,1800.0,1800.0
+2026-06-03,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-04,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-07,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1810.0,1810.0,1810.0
+2026-06-08,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-12,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1810.0,1810.0,1810.0
+2026-06-14,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1850.0,1850.0,1850.0
+2026-06-15,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-15,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-16,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1830.0,1830.0,1830.0
+2026-06-17,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-18,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1850.0,1850.0,1850.0
+2026-06-19,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-06-20,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1920.0,1920.0,1920.0
+2026-06-20,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1920.0,1920.0,1920.0
+2026-06-21,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1860.0,1860.0,1860.0
+2026-06-21,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1860.0,1860.0,1860.0
+2026-06-22,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1830.0,1830.0,1830.0
+2026-06-23,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1820.0,1820.0,1820.0
+2026-06-24,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1870.0,1870.0,1870.0
+2026-06-25,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1870.0,1870.0,1870.0
+2026-06-25,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1870.0,1870.0,1870.0
+2026-06-26,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1920.0,1920.0,1920.0
+2026-06-27,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1930.0,1930.0,1930.0
+2026-06-28,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1860.0,1860.0,1860.0
+2026-06-29,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-06-29,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-06-30,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-07-01,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-07-01,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-07-02,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1930.0,1930.0,1930.0
+2026-07-03,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1870.0,1870.0,1870.0
+2026-07-03,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1870.0,1870.0,1870.0
+2026-07-04,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1890.0,1890.0,1890.0
+2026-07-05,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1960.0,1960.0,1960.0
+2026-07-05,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1960.0,1960.0,1960.0
+2026-07-06,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-07-07,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1930.0,1930.0,1930.0
+2026-07-09,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1960.0,1960.0,1960.0
+2026-07-10,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-07-10,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1910.0,1910.0,1910.0
+2026-07-11,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-07-12,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-07-16,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-07-17,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1990.0,1990.0,1990.0
+2026-07-17,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1990.0,1990.0,1990.0
+2026-07-18,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1990.0,1990.0,1990.0
+2026-07-19,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1970.0,1970.0,1970.0
+2026-07-20,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1960.0,1970.0,1965.0
+2026-07-21,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1930.0,1930.0,1930.0
+2026-07-22,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,1960.0,1960.0,1960.0
+2026-07-23,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2250.0,2250.0,2250.0
+2026-07-23,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2250.0,2250.0,2250.0
+2026-07-24,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2300.0,2300.0,2300.0
+2026-07-26,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2350.0,2350.0,2350.0
+2026-07-27,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2250.0,2250.0,2250.0
+2026-07-28,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2350.0,2350.0,2350.0
+2026-07-31,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2360.0,2360.0,2360.0
+2026-08-02,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2340.0,2340.0,2340.0
+2026-08-03,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2340.0,2340.0,2340.0
+2026-08-04,Andhra Pradesh,NTR,Nandigama,Paddy(Common),B P T,Grade Range-1,2330.0,2330.0,2330.0
+2026-05-28,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-28,Andhra Pradesh,West Godavari,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-29,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-30,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-31,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-05-31,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-06-01,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-06-02,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-06-02,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-06-03,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2369.0,2369.0,2369.0
+2026-06-06,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2380.0,2380.0,2380.0
+2026-06-08,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2380.0,2380.0,2380.0
+2026-06-09,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-10,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-11,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-11,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-12,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-15,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-16,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-17,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-18,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-19,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-20,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-22,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-23,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-24,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-25,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-25,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-27,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-27,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-06-29,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2389.0,2389.0,2389.0
+2026-06-30,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-01,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-02,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-04,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-04,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-06,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-06,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-08,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-09,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-11,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-11,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-13,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-13,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2390.0,2390.0,2390.0
+2026-07-14,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-15,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-16,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-17,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-20,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-21,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-21,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-22,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-23,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-24,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-24,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-25,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-27,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-28,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-29,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-30,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-07-31,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-01,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-03,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-04,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-04,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-05,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-05,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2026-08-06,Andhra Pradesh,Eluru,Polavaram,Paddy(Common),1001,Local,2445.0,2445.0,2445.0
+2025-11-12,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2360.0,2360.0,2360.0
+2025-11-13,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-14,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-14,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-17,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-17,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-18,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-18,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-19,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-19,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-22,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-24,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-24,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-27,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-28,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-29,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-11-29,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-01,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-02,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-02,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-04,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-05,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-06,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-06,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-10,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-10,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-11,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-11,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-16,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-16,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-17,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-17,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-18,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-19,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-20,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-22,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-23,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-23,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-24,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-26,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-29,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-31,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2025-12-31,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-02,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-03,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-05,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-06,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-07,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-07,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-08,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-12,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-12,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-19,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-24,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-24,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-27,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-01-29,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-02-04,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-02-07,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-02-09,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-02-09,Andhra Pradesh,Alluri Sitharama Raju,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2370.0,2370.0,2370.0
+2026-07-27,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-07-29,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,FAQ,2369.0,2389.0,2379.0
+2026-07-29,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-07-29,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,FAQ,2369.0,2389.0,2379.0
+2026-07-29,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-07-30,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-07-31,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-08-03,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-08-04,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,FAQ,2369.0,2489.0,2479.0
+2026-08-04,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,FAQ,2369.0,2489.0,2479.0
+2026-08-05,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-08-05,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2389.0,2379.0
+2026-08-06,Andhra Pradesh,Polavaram,Rampachodvaram,Paddy(Common),1001,Grade Range-2,2369.0,2489.0,2379.0
+2025-11-10,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2500.0,2460.0
+2025-12-15,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Non-FAQ,2370.0,2480.0,2440.0
+2026-02-09,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2470.0,2440.0
+2026-02-10,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2460.0,2430.0
+2026-02-16,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2420.0
+2026-02-20,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2375.0,2430.0,2420.0
+2026-02-23,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2375.0,2420.0,2390.0
+2026-02-24,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2410.0,2390.0
+2026-02-27,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2375.0,2415.0,2395.0
+2026-02-28,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2410.0,2390.0
+2026-03-02,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2375.0,2410.0,2390.0
+2026-03-12,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2400.0
+2026-03-13,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2385.0,2430.0,2400.0
+2026-03-16,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2450.0,2430.0
+2026-03-17,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-03-17,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-03-18,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2440.0
+2026-03-20,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2450.0
+2026-03-23,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2460.0
+2026-03-24,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2470.0,2450.0
+2026-03-26,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2460.0
+2026-03-28,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-03-30,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2470.0,2450.0
+2026-03-31,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2460.0
+2026-03-31,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2460.0
+2026-04-01,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2450.0
+2026-04-01,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2450.0
+2026-04-02,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-02,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-04,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-04,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-06,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-04-06,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-04-07,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-04-07,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2460.0,2430.0
+2026-04-08,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2440.0
+2026-04-09,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-09,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2490.0,2460.0
+2026-04-10,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2440.0
+2026-04-10,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2440.0
+2026-04-10,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2440.0
+2026-04-13,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2480.0,2430.0
+2026-04-15,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2470.0,2430.0
+2026-04-15,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2390.0,2470.0,2430.0
+2026-04-17,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2460.0,2420.0
+2026-04-17,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2460.0,2420.0
+2026-04-17,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2460.0,2420.0
+2026-04-18,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2460.0,2420.0
+2026-04-20,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2480.0,2410.0
+2026-04-20,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2480.0,2410.0
+2026-04-21,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2410.0
+2026-04-21,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2410.0
+2026-04-22,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2420.0,2410.0
+2026-04-23,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-23,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-23,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-23,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-24,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2400.0
+2026-04-24,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2430.0,2400.0
+2026-04-25,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-25,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-25,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2430.0,2410.0
+2026-04-27,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Paddy,Local,2370.0,2420.0,2410.0
+2026-04-27,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Paddy,Local,2370.0,2420.0,2410.0
+2026-04-29,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2420.0
+2026-04-29,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2420.0
+2026-04-29,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2380.0,2440.0,2420.0
+2026-04-30,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2430.0,2420.0
+2026-04-30,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2430.0,2420.0
+2026-04-30,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2430.0,2420.0
+2026-05-11,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-11,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-14,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-14,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-15,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-15,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-15,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2420.0,2390.0
+2026-05-20,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2390.0
+2026-05-20,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2390.0
+2026-05-20,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2390.0
+2026-05-21,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2410.0,2390.0
+2026-05-21,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2410.0,2390.0
+2026-05-22,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2410.0,2390.0
+2026-05-25,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2380.0
+2026-05-26,Andhra Pradesh,Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2410.0,2380.0
+2026-05-26,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2410.0,2380.0
+2026-05-27,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2385.0
+2026-05-27,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2370.0,2400.0,2385.0
+2026-06-25,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2350.0,2390.0,2370.0
+2026-07-01,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2330.0,2390.0,2375.0
+2026-07-01,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2330.0,2390.0,2375.0
+2026-07-09,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2320.0,2420.0,2380.0
+2026-07-09,Andhra Pradesh,SPSR Nellore,Rapur,Paddy(Common),Common,Local,2320.0,2420.0,2380.0
+2025-11-01,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2700.0,2600.0
+2025-11-01,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Non-FAQ,2300.0,2500.0,2400.0
+2025-11-01,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2700.0,2600.0
+2025-11-03,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2500.0,2850.0,2700.0
+2025-11-03,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Non-FAQ,2300.0,2500.0,2400.0
+2025-11-04,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2700.0,2550.0
+2025-11-05,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2800.0,2600.0
+2025-11-05,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Non-FAQ,2200.0,2400.0,2300.0
+2025-11-05,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Non-FAQ,2200.0,2400.0,2300.0
+2025-11-06,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2800.0,2600.0
+2025-11-07,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Grade Range-1,2400.0,2400.0,2400.0
+2025-11-10,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2025-11-11,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2025-11-12,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2350.0,2350.0,2350.0
+2025-11-14,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-11-14,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-11-21,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-11-22,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-11-26,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-11-27,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-11-29,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-11-29,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-12-02,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-12-08,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2025-12-09,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-12-09,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2025-12-10,Andhra Pradesh,Krishna,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-05-29,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2250.0,2250.0,2250.0
+2026-05-29,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2250.0,2250.0,2250.0
+2026-06-01,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-01,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-02,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,FAQ,2400.0,2400.0,2400.0
+2026-06-03,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-04,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-06,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-06,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-08,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-09,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-10,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-11,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-12,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-15,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-16,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-17,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-17,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-19,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-19,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-22,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-23,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-24,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-24,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-25,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-25,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-29,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-06-30,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-06-30,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-01,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2400.0,2400.0,2400.0
+2026-07-02,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2100.0,2100.0,2100.0
+2026-07-03,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-04,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-06,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-07,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-08,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-09,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-10,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2459.0,2459.0,2459.0
+2026-07-13,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-14,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-15,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-17,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-18,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-20,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2550.0,2550.0,2550.0
+2026-07-21,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-24,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-24,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2450.0,2450.0,2450.0
+2026-07-25,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-26,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-28,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2500.0,2500.0,2500.0
+2026-07-29,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2700.0,2700.0,2700.0
+2026-07-29,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2600.0,2700.0,2655.88
+2026-07-30,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2550.0,2550.0,2550.0
+2026-07-31,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2550.0,2550.0,2550.0
+2026-08-01,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2600.0,2600.0,2600.0
+2026-08-03,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2600.0,2600.0,2600.0
+2026-08-04,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2700.0,2700.0,2700.0
+2026-08-05,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2700.0,2700.0,2700.0
+2026-08-06,Andhra Pradesh,NTR,Tiruvuru,Paddy(Common),Sona,Local,2700.0,2700.0,2700.0

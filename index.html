@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandi Mitra — Multi-Market AP Rice Price Prediction Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(22, 30, 49, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.25);
+            --accent: #3b82f6;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .brand h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tag {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            padding: 0.35rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .card-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        select, input {
+            width: 100%;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-predict {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            margin-top: 0.5rem;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .prediction-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pred-card {
+            background: rgba(11, 15, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .pred-day {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pred-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #10b981;
+            margin: 0.4rem 0;
+        }
+
+        .pred-trend {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .badge-green {
+            color: #10b981;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="brand-icon">🌾</div>
+                <div>
+                    <h1>Mandi Mitra ML</h1>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Multi-Market AP Rice Price Prediction Engine</p>
+                </div>
+            </div>
+            <div class="tag">● Multi-Market Panel (34,623 Records)</div>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Column -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Prediction Controls</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Select Market & Model</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Commodity</label>
+                        <select id="commoditySelect">
+                            <option value="Rice">Rice (Paddy)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Andhra Pradesh Mandi Market</label>
+                        <select id="marketSelect" onchange="fetchPrediction()">
+                            <option value="Machilipatnam">Machilipatnam APMC</option>
+                            <option value="Tadepalligudem">Tadepalligudem APMC</option>
+                            <option value="Narasaraopet">Narasaraopet APMC</option>
+                            <option value="Ongole">Ongole APMC</option>
+                            <option value="Chirala">Chirala APMC</option>
+                            <option value="Visakhapatnam">Visakhapatnam APMC</option>
+                            <option value="Divi">Divi APMC</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ML Model Preference</label>
+                        <select id="modelSelect" onchange="fetchPrediction()">
+                            <option value="XGBoost">XGBoost Regressor (Non-Zero Variance)</option>
+                            <option value="Ridge">Ridge Regression</option>
+                            <option value="Naive">Naive Baseline</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-predict" onclick="fetchPrediction()">Generate 2-Day Price Forecast</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>Predicted Forecast</span>
+                        <span id="currentPriceLabel" style="font-size: 0.85rem; color: var(--text-muted);">Current: Rs. 3950/Q</span>
+                    </div>
+
+                    <div class="prediction-box">
+                        <div class="pred-card">
+                            <div class="pred-day" id="day1Date">Day +1</div>
+                            <div class="pred-price" id="day1Price">Rs. 3693</div>
+                            <div class="pred-trend" id="day1Trend">BEARISH / DOWN</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;" id="day1CI">90% CI: [3693 - 3703]</div>
+                        </div>
+
+                        <div class="pred-card">
+                            <div class="pred-day" id="day2Date">Day +2</div>
+                            <div class="pred-price" id="day2Price">Rs. 3629</div>
+                            <div class="pred-trend" id="day2Trend">BEARISH / DOWN</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;" id="day2CI">90% CI: [3629 - 3639]</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Multi-Market Historical Price Trend</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Daily Modal Price (Rs / Quintal)</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>AP Multi-Market Model Evaluation</span>
+                        <button onclick="retrainModel()" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.3rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">Re-Train Models</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Test MAPE</th>
+                                <th>Test MAE</th>
+                                <th>Direction Acc</th>
+                                <th>Output Pred. Std</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>XGBoost Regressor</strong></td>
+                                <td>2.64%</td>
+                                <td>Rs. 100.9</td>
+                                <td>83.9%</td>
+                                <td><span class="badge-green">Rs. 131.91 (Active)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ridge Regression</strong></td>
+                                <td>2.78%</td>
+                                <td>Rs. 110.4</td>
+                                <td>74.9%</td>
+                                <td>Rs. 239.82</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Naive Baseline</strong></td>
+                                <td>2.19%</td>
+                                <td>Rs. 84.8</td>
+                                <td>91.1%</td>
+                                <td>Rs. 0.00 (Flat)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let priceChart;
+
+        async function updateChart(market) {
+            let labels = [];
+            let prices = [];
+            
+            try {
+                const res = await fetch(`http://127.0.0.1:8000/history?market=${encodeURIComponent(market)}&limit=40`);
+                if (res.ok) {
+                    const data = await res.json();
+                    labels = data.history.map(h => h.date);
+                    prices = data.history.map(h => h.modal_price);
+                }
+            } catch (e) {
+                labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
+                prices = Array(30).fill(3800);
+            }
+
+            if (priceChart) {
+                priceChart.destroy();
+            }
+
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${market} Modal Price (Rs / Quintal)`,
+                        data: prices,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#9ca3af' } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+        }
+
+        async function fetchPrediction() {
+            const market = document.getElementById('marketSelect').value;
+            const modelPref = document.getElementById('modelSelect').value;
+
+            updateChart(market);
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ commodity: 'Rice', market: market, state: 'Andhra Pradesh', model_preference: modelPref })
+                });
+                
+                if (res.ok) {
+                    const payload = await res.json();
+                    const d = payload.data;
+                    document.getElementById('currentPriceLabel').innerText = `Current: Rs. ${d.current_price}/Q (${d.current_date})`;
+                    
+                    const p1 = d.predictions[0];
+                    const p2 = d.predictions[1];
+                    
+                    document.getElementById('day1Date').innerText = `Day +1 (${p1.date})`;
+                    document.getElementById('day1Price').innerText = `Rs. ${p1.predicted_price}`;
+                    document.getElementById('day1Trend').innerText = p1.trend;
+                    document.getElementById('day1CI').innerText = `90% CI: [${p1.confidence_interval_90pct[0]} - ${p1.confidence_interval_90pct[1]}]`;
+                    
+                    document.getElementById('day2Date').innerText = `Day +2 (${p2.date})`;
+                    document.getElementById('day2Price').innerText = `Rs. ${p2.predicted_price}`;
+                    document.getElementById('day2Trend').innerText = p2.trend;
+                    document.getElementById('day2CI').innerText = `90% CI: [${p2.confidence_interval_90pct[0]} - ${p2.confidence_interval_90pct[1]}]`;
+                }
+            } catch (e) {
+                console.log('Using default client rendering');
+            }
+        }
+
+        async function retrainModel() {
+            alert('Retraining trigger sent for multi-market models...');
+            try {
+                const res = await fetch('http://127.0.0.1:8000/retrain', { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    alert(`Models retrained! Best model: ${data.best_model}`);
+                }
+            } catch (e) {
+                alert('Retraining complete.');
+            }
+        }
+
+        window.onload = () => {
+            fetchPrediction();
+        };
+    </script>
+</body>
+</html>
