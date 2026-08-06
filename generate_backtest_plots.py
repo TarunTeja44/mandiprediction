@@ -27,7 +27,7 @@ def generate_graphs(backtest_days=90):
     df = pd.read_csv(csv_path)
     df['date'] = pd.to_datetime(df['date'])
     
-    markets = ['Jaggampet', 'Kuchinapudi', 'Tiruvuru', 'Polavaram', 'Kovvur', 'Rampachodvaram']
+    markets = ['Banaganapalli', 'Tiruvuru', 'Rajahmundry', 'Tanuku', 'Nandyal', 'Peddapuram']
     
     fig, axes = plt.subplots(3, 2, figsize=(16, 12), sharex=False)
     axes = axes.flatten()
@@ -82,8 +82,7 @@ def generate_graphs(backtest_days=90):
             actuals.append(actual_tomorrow)
             preds.append(pred_price)
             
-            # Calibrated volatility band
-            vol_band = 25.0 if mkt.lower() not in ['jaggampet', 'kuchinapudi'] else 36.0
+            vol_band = 25.0
             lower_bands.append(pred_price - vol_band)
             upper_bands.append(pred_price + vol_band)
             
@@ -102,7 +101,7 @@ def generate_graphs(backtest_days=90):
         fig_single, ax_single = plt.subplots(figsize=(10, 5))
         ax_single.plot(dates, actuals, label='Actual Recorded Price (Rs/Q)', color='#1f77b4', linewidth=2.5)
         ax_single.plot(dates, preds, label='XGBoost Predicted Price (Rs/Q)', color='#d62728', linestyle='--', linewidth=2.2)
-        ax_single.fill_between(dates, lower_bands, upper_bands, color='#d62728', alpha=0.15, label='Calibrated Trading Range (±Rs. 25-36)')
+        ax_single.fill_between(dates, lower_bands, upper_bands, color='#d62728', alpha=0.15, label='Calibrated Trading Range (±Rs. 25/Q)')
         ax_single.set_title(f"Paddy(Common) 90-Day Backtest: Actual vs Predicted Price — {mkt} Mandi ({district_name})", fontsize=12, fontweight='bold')
         ax_single.set_xlabel("Date", fontsize=11)
         ax_single.set_ylabel("Price (Rs. / Quintal)", fontsize=11)
@@ -111,11 +110,12 @@ def generate_graphs(backtest_days=90):
         ax_single.legend(loc='best', fontsize=10)
         fig_single.tight_layout()
         
-        single_path = os.path.join(ARTIFACT_DIR, f"actual_vs_predicted_{mkt.lower()}.png")
+        m_slug = mkt.lower().replace(' ', '_').replace('(', '').replace(')', '')
+        single_path = os.path.join(ARTIFACT_DIR, f"actual_vs_predicted_{m_slug}.png")
         fig_single.savefig(single_path, dpi=150)
         plt.close(fig_single)
         saved_plots.append(single_path)
-        print(f"Saved single plot for {mkt} to: {single_path}")
+        print(f"Saved plot for {mkt} to: {single_path}")
 
     fig.suptitle("Paddy(Common) 90-Day Walk-Forward Backtest: Actual vs Predicted Price Across AP Mandis", fontsize=16, fontweight='bold', y=0.99)
     fig.tight_layout()

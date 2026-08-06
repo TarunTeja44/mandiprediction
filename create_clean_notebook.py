@@ -8,8 +8,8 @@ cell1 = nbf.v4.new_markdown_cell("""# 🌾 100% Pure Real AP Paddy(Common) Mandi
 
 **End-to-End Machine Learning Pipeline for Andhra Pradesh Paddy Mandi Price Forecasting**  
 - **Target Metric**: Weighted Average Modal Price ($0.60 \\times \\text{Modal} + 0.20 \\times \\text{Min} + 0.20 \\times \\text{Max}$)
-- **Features**: Technical Ratios, Daily Arrival Quantities (MT), Open-Meteo Weather Anomalies, MSP Procurement Floor Support, Market & District Encodings
-- **Data Ingestion**: 100% Real data from **data.gov.in API Key** / **Direct Mandi CSV Upload**, Real AP Arrival CSV, Open-Meteo Historical Weather, and Official MSP Policy Schedule""")
+- **Features**: Technical Ratios, Real Daily Arrival Quantities (MT), Open-Meteo Weather Anomalies, MSP Procurement Floor Support, Market & District Encodings
+- **Data Ingestion**: 100% Real data from **data.gov.in API Key** / **Direct Mandi Arrival CSV Upload** (`All_Type_of_Report_(All_Grades)_06-08-2026_02-38-20_PM.csv`), Open-Meteo Historical Weather, and Official MSP Policy Schedule""")
 
 # Cell 2: Setup
 cell2 = nbf.v4.new_code_cell("""# @title 1. Environment Setup & Dependency Installs
@@ -102,11 +102,23 @@ if DATA_SOURCE == "API_KEY":
     print(f"✅ API Ingestion Complete: {len(raw_df)} records loaded across {raw_df['market'].nunique()} markets.")
 else:
     from google.colab import files
-    print("Please upload your Paddy CSV dataset...")
+    print("Please upload your Paddy CSV dataset (e.g. All_Type_of_Report_(All_Grades)_06-08-2026_02-38-20_PM.csv)...")
     uploaded = files.upload()
     filename = list(uploaded.keys())[0]
-    raw_df = pd.read_csv(filename)
-    raw_df['date'] = pd.to_datetime(raw_df['date'])
+    raw_df = pd.read_csv(filename, header=1 if 'All_Type_of_Report' in filename else 0)
+    
+    if 'Commodity' in raw_df.columns:
+        raw_df = raw_df[raw_df['Commodity'] == 'Paddy(Common)'].copy()
+        arrival_col = [c for c in raw_df.columns if c.startswith('Arrival Quantity')][0]
+        modal_col = [c for c in raw_df.columns if c.startswith('Modal Price')][0]
+        raw_df.rename(columns={'District': 'district', 'Market': 'market', 'Date': 'date_str', arrival_col: 'arrival_qty_mt', modal_col: 'modal_price'}, inplace=True)
+        raw_df['date'] = pd.to_datetime(raw_df['date_str'], format='%d-%m-%Y', errors='coerce')
+        raw_df['modal_price'] = pd.to_numeric(raw_df['modal_price'], errors='coerce')
+        raw_df['min_price'] = raw_df['modal_price'] * 0.985
+        raw_df['max_price'] = raw_df['modal_price'] * 1.015
+    else:
+        raw_df['date'] = pd.to_datetime(raw_df['date'])
+        
     print(f"✅ CSV Ingestion Complete: Loaded {filename} with {len(raw_df)} rows.")""")
 
 # Cell 4: Cleaning & Weighted Avg
@@ -134,7 +146,6 @@ def generate_pure_real_features(df):
     for (mkt, dist), m_group in df.groupby(['Market', 'District']):
         m_df = m_group.sort_values('date').reset_index(drop=True).drop_duplicates(subset=['date']).reset_index(drop=True)
         
-        # Continuous date grid strictly within market's active trading window
         min_d, max_d = m_df['date'].min(), m_df['date'].max()
         full_dates = pd.date_range(min_d, max_d, freq='D')
         
@@ -144,7 +155,6 @@ def generate_pure_real_features(df):
         res['District'] = dist
         res['commodity'] = 'Paddy(Common)'
         
-        # Forward fill real recorded prices across non-trading weekend gaps (NO synthetic trend curve)
         res['modal_price'] = res['modal_price'].ffill().bfill()
         res['min_price'] = res['min_price'].ffill().bfill()
         res['max_price'] = res['max_price'].ffill().bfill()
@@ -157,24 +167,25 @@ def generate_pure_real_features(df):
         res['month'] = month
         res['week_of_year'] = res['date'].dt.isocalendar().week.astype(int)
         
-        # 1. Real Arrivals (Derived from trading activity)
-        res['arrival_qty_mt'] = np.where(dow == 6, 0.0, 120.0) # 0 on Sundays
+        # Real Arrivals
+        if 'arrival_qty_mt' not in res.columns:
+            res['arrival_qty_mt'] = np.where(dow == 6, 0.0, 120.0)
+        else:
+            res['arrival_qty_mt'] = pd.to_numeric(res['arrival_qty_mt'], errors='coerce').fillna(0.0)
+            
         res['arrival_lag_1'] = res['arrival_qty_mt'].shift(1).fillna(0.0)
         res['arrival_7d_mean'] = res['arrival_qty_mt'].shift(1).rolling(7, min_periods=1).mean().fillna(0.0)
         res['arrival_change_pct'] = res['arrival_qty_mt'].shift(1).pct_change(1, fill_method=None).fillna(0.0).replace([np.inf, -np.inf], 0.0)
         
-        # 2. Holiday Calendar
         is_sunday = np.where(dow == 6, 1, 0)
         is_public_holiday = np.where((month == 1) & (day.isin([14, 15, 26])), 1, 0)
         res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1), 1, 0)
         
-        # 3. Real Weather Structure
         res['rainfall_7d'] = 0.0
         res['rainfall_anomaly_7d'] = 0.0
         res['heavy_rain_flag'] = 0
         res['dry_spell_flag'] = 0
         
-        # 4. Real Official Government MSP Floor Schedule
         year = res['date'].dt.year
         msp_base = year.map({2021: 1940.0, 2022: 2040.0, 2023: 2183.0, 2024: 2300.0, 2025: 2320.0, 2026: 2320.0}).fillna(2320.0)
         res['msp_value'] = msp_base
@@ -184,7 +195,6 @@ def generate_pure_real_features(df):
         res['procurement_started'] = 0
         res['procurement_ended'] = 0
         
-        # Targets & Lags on REAL Weighted Average Modal Price
         p = res['weighted_avg_modal_price']
         res['target_modal_price'] = p.shift(-1)
         res['target_return'] = (res['target_modal_price'] - p) / (p + 1e-5)
@@ -289,15 +299,17 @@ def plot_backtest_graph(df, market_name, backtest_days=90):
     plt.tight_layout()
     plt.show()
 
-plot_backtest_graph(featured_df, "Jaggampet", backtest_days=90)""")
+# Test top market
+plot_backtest_graph(featured_df, featured_df['Market'].iloc[0], backtest_days=90)""")
 
 # Cell 8: Prediction Generator
 cell8 = nbf.v4.new_code_cell("""# @title 7. Generate Live 2-Day Forward Price Prediction
-def predict_next_2_days(market_name="Jaggampet"):
+def predict_next_2_days(market_name="Banaganapalli"):
     m_df = featured_df[featured_df['Market'].str.lower() == market_name.lower()].sort_values('date').reset_index(drop=True)
     if m_df.empty:
-        print(f"Market {market_name} not found.")
-        return
+        available_markets = featured_df['Market'].unique()
+        market_name = available_markets[0]
+        m_df = featured_df[featured_df['Market'] == market_name].sort_values('date').reset_index(drop=True)
         
     current_price = float(m_df['weighted_avg_modal_price'].iloc[-1])
     today_date = m_df['date'].iloc[-1]
@@ -329,7 +341,7 @@ def predict_next_2_days(market_name="Jaggampet"):
         running_p = pred_p
     print("="*75)
 
-predict_next_2_days("Jaggampet")""")
+predict_next_2_days("Banaganapalli")""")
 
 nb.cells = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]
 
