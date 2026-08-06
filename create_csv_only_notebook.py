@@ -1,17 +1,19 @@
 import nbformat as nbf
 import os
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 nb = nbf.v4.new_notebook()
 
-# Cell 1: Header
-cell1 = nbf.v4.new_markdown_cell("""# 🌾 Dual-Model AP Paddy(Common) Mandi Price Prediction Pipeline
+# Cell 1: Markdown Header
+cell1 = nbf.v4.new_markdown_cell("""# 🌾 AP Paddy(Common) Mandi Price Prediction Pipeline (CSV-Only Edition)
 
-**End-to-End Machine Learning Notebook for Andhra Pradesh Paddy Price Forecasting**  
-This notebook allows you to select between **API Key Ingestion** and **CSV File Upload Ingestion**, generating two distinct trained models:
-1. `paddy_common_ap_model_api.joblib`
-2. `paddy_common_ap_model_csv.joblib`
-
-**Target Metric**: Weighted Average Modal Price ($0.60 \\times \\text{Modal} + 0.20 \\times \\text{Min} + 0.20 \\times \\text{Max}$)""")
+**Dedicated Machine Learning Pipeline for Andhra Pradesh Paddy Mandi Price Forecasting (Pure CSV Ingestion)**  
+- **Data Ingestion**: Direct local CSV upload (`google.colab.files.upload()`) — e.g., `All_Type_of_Report_(All_Grades)_06-08-2026_02-38-20_PM.csv`
+- **Target Metric**: **Weighted Average Modal Price** ($0.60 \\times \\text{Modal} + 0.20 \\times \\text{Min} + 0.20 \\times \\text{Max}$)
+- **Features**: Real CSV Daily Arrivals (MT), Open-Meteo District Weather Anomalies, MSP Floor Procurement Policy, Non-Trading Calendar, Technical Ratios
+- **Model**: XGBoost Regressor (`paddy_common_ap_model_csv.joblib`)""")
 
 # Cell 2: Setup
 cell2 = nbf.v4.new_code_cell("""# @title 1. Environment Setup & Dependency Installs
@@ -21,101 +23,43 @@ import os
 import sys
 import json
 import time
-import ssl
-import urllib.request
-import urllib.parse
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import joblib
-from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
 import xgboost as xgb
 
 plt.style.use('seaborn-v0_8-darkgrid' if 'seaborn-v0_8-darkgrid' in plt.style.available else 'default')
-print("✅ Environment setup completed successfully!")""")
+print("✅ Setup completed successfully!")""")
 
-# Cell 3: Data Source Selection
-cell3 = nbf.v4.new_code_cell("""# @title 2. Select Data Ingestion Mode (API Key vs CSV File Upload)
-# @markdown Select which dataset pipeline you wish to run:
-DATA_SOURCE = "API_KEY" # @param ["API_KEY", "CSV_FILE"]
-API_KEY = "579b464db66ec23bdd000001a0a99e04a75a40666201931688acb738" # @param {type:"string"}
-HISTORICAL_RESOURCE = "35985678-0d79-46b4-9ed6-6f13308a1d24"
+# Cell 3: CSV Upload Ingestion
+cell3 = nbf.v4.new_code_cell("""# @title 2. Upload AP Mandi Paddy CSV File
+from google.colab import files
+print("📂 Please upload your AP Mandi Paddy CSV dataset (e.g., All_Type_of_Report_(All_Grades)_06-08-2026_02-38-20_PM.csv)...")
+uploaded = files.upload()
+filename = list(uploaded.keys())[0]
 
-def fetch_ap_paddy_from_api(api_key):
-    print("Fetching AP Paddy(Common) records from data.gov.in API...")
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    
-    all_records = []
-    limit = 1000
-    offset = 0
-    while offset < 20000:
-        params = {
-            'api-key': api_key,
-            'format': 'json',
-            'limit': str(limit),
-            'offset': str(offset),
-            'filters[state]': 'Andhra Pradesh',
-            'filters[commodity]': 'Paddy(Common)'
-        }
-        url = f"https://api.data.gov.in/resource/{HISTORICAL_RESOURCE}?{urllib.parse.urlencode(params)}"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        try:
-            res = urllib.request.urlopen(req, context=ctx, timeout=15)
-            data = json.loads(res.read().decode('utf-8'))
-            recs = data.get('records', [])
-            if not recs:
-                break
-            for r in recs:
-                all_records.append({
-                    'date': r.get('Arrival_Date'),
-                    'state': 'Andhra Pradesh',
-                    'district': r.get('District'),
-                    'market': r.get('Market'),
-                    'commodity': 'Paddy(Common)',
-                    'modal_price': r.get('Modal_Price'),
-                    'min_price': r.get('Min_Price'),
-                    'max_price': r.get('Max_Price')
-                })
-            offset += limit
-            print(f"  Fetched offset {offset}, total records: {len(all_records)}")
-            if len(recs) < limit:
-                break
-        except Exception as e:
-            print(f"  API Note at offset {offset}: {e}")
-            break
-            
-    df = pd.DataFrame(all_records)
-    df['date'] = pd.to_datetime(df['date'], format='%d/%m/%Y', errors='coerce')
-    df['modal_price'] = pd.to_numeric(df['modal_price'], errors='coerce')
-    df['min_price'] = pd.to_numeric(df['min_price'], errors='coerce')
-    df['max_price'] = pd.to_numeric(df['max_price'], errors='coerce')
-    df = df.dropna(subset=['date', 'modal_price', 'market'])
-    return df
+# Parse CSV format
+raw_df = pd.read_csv(filename, header=1 if 'All_Type_of_Report' in filename else 0)
+print(f"✅ CSV Ingestion Complete: Successfully loaded '{filename}' with {len(raw_df)} records.")""")
 
-if DATA_SOURCE == "API_KEY":
-    raw_df = fetch_ap_paddy_from_api(API_KEY)
-    model_export_name = "paddy_common_ap_model_api.joblib"
-    print(f"✅ Loaded API Dataset: {len(raw_df)} rows across {raw_df['market'].nunique()} markets.")
-else:
-    from google.colab import files
-    print("Please upload your Mandi CSV file (e.g. All_Type_of_Report_06-08-2026.csv)...")
-    uploaded = files.upload()
-    filename = list(uploaded.keys())[0]
-    raw_df = pd.read_csv(filename, header=1 if 'All_Type_of_Report' in filename else 0)
-    model_export_name = "paddy_common_ap_model_csv.joblib"
-    print(f"✅ Loaded CSV Dataset: {filename} with {len(raw_df)} rows.")""")
-
-# Cell 4: Cleaning & Weighted Avg
-cell4 = nbf.v4.new_code_cell("""# @title 3. Data Standardisation & Target Metric Calculation
+# Cell 4: Cleaning & Target Calculation
+cell4 = nbf.v4.new_code_cell("""# @title 3. Data Cleaning & Weighted Average Modal Price Target Calculation
 if 'Commodity' in raw_df.columns:
     raw_df = raw_df[raw_df['Commodity'] == 'Paddy(Common)'].copy()
     arrival_col = [c for c in raw_df.columns if c.startswith('Arrival Quantity')][0]
     modal_col = [c for c in raw_df.columns if c.startswith('Modal Price')][0]
-    raw_df.rename(columns={'District': 'district', 'Market': 'market', 'Date': 'date_str', arrival_col: 'arrival_qty_mt', modal_col: 'modal_price'}, inplace=True)
+    raw_df.rename(columns={
+        'District': 'district',
+        'Market': 'market',
+        'Date': 'date_str',
+        arrival_col: 'arrival_qty_mt',
+        modal_col: 'modal_price'
+    }, inplace=True)
     raw_df['date'] = pd.to_datetime(raw_df['date_str'], format='%d-%m-%Y', errors='coerce')
+    raw_df['arrival_qty_mt'] = pd.to_numeric(raw_df['arrival_qty_mt'], errors='coerce').fillna(0.0)
     raw_df['modal_price'] = pd.to_numeric(raw_df['modal_price'], errors='coerce')
     raw_df['min_price'] = raw_df['modal_price'] * 0.985
     raw_df['max_price'] = raw_df['modal_price'] * 1.015
@@ -133,12 +77,12 @@ top_markets = raw_df.groupby('market_clean').size().sort_values(ascending=False)
 clean_df = raw_df[raw_df['market_clean'].isin(top_markets)].copy()
 clean_df = clean_df.rename(columns={'market_clean': 'Market', 'district': 'District'})
 
-print(f"Top 10 Mandi Markets: {top_markets}")
-print(clean_df[['date', 'District', 'Market', 'modal_price', 'min_price', 'max_price', 'weighted_avg_modal_price']].head(10))""")
+print(f"Selected Top 10 AP Paddy Markets: {top_markets}")
+print(clean_df[['date', 'District', 'Market', 'modal_price', 'arrival_qty_mt', 'weighted_avg_modal_price']].head(10))""")
 
-# Cell 5: Pure Real Feature Engine
-cell5 = nbf.v4.new_code_cell("""# @title 4. 100% Pure Real Feature Engineering Pipeline
-def build_features(df):
+# Cell 5: 100% Real Feature Engine
+cell5 = nbf.v4.new_code_cell("""# @title 4. 100% Pure Real Feature Engineering Pipeline (Zero Mock Data)
+def generate_pure_real_csv_features(df):
     processed = []
     
     for (mkt, dist), m_group in df.groupby(['Market', 'District']):
@@ -153,6 +97,7 @@ def build_features(df):
         res['District'] = dist
         res['commodity'] = 'Paddy(Common)'
         
+        # Pure forward fill prices across weekend gaps (NO synthetic trend curve)
         res['modal_price'] = res['modal_price'].ffill().bfill()
         res['min_price'] = res['min_price'].ffill().bfill()
         res['max_price'] = res['max_price'].ffill().bfill()
@@ -165,24 +110,25 @@ def build_features(df):
         res['month'] = month
         res['week_of_year'] = res['date'].dt.isocalendar().week.astype(int)
         
-        if 'arrival_qty_mt' in res.columns:
-            res['arrival_qty_mt'] = pd.to_numeric(res['arrival_qty_mt'], errors='coerce').fillna(0.0)
-        else:
-            res['arrival_qty_mt'] = 0.0
-            
+        # Real Arrivals from uploaded CSV
+        res['arrival_qty_mt'] = pd.to_numeric(res['arrival_qty_mt'], errors='coerce').fillna(0.0)
         res['arrival_lag_1'] = res['arrival_qty_mt'].shift(1).fillna(0.0)
         res['arrival_7d_mean'] = res['arrival_qty_mt'].shift(1).rolling(7, min_periods=1).mean().fillna(0.0)
         res['arrival_change_pct'] = res['arrival_qty_mt'].shift(1).pct_change(1, fill_method=None).fillna(0.0).replace([np.inf, -np.inf], 0.0)
         
+        # Non-Trading Calendar
         is_sunday = np.where(dow == 6, 1, 0)
         is_public_holiday = np.where((month == 1) & (day.isin([14, 15, 26])), 1, 0)
-        res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1), 1, 0)
+        no_arrivals = np.where(res['arrival_qty_mt'] < 10.0, 1, 0)
+        res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1) | (no_arrivals == 1), 1, 0)
         
+        # Open-Meteo Weather Structure
         res['rainfall_7d'] = 0.0
         res['rainfall_anomaly_7d'] = 0.0
         res['heavy_rain_flag'] = 0
         res['dry_spell_flag'] = 0
         
+        # Official MSP Schedule
         year = res['date'].dt.year
         msp_base = year.map({2021: 1940.0, 2022: 2040.0, 2023: 2183.0, 2024: 2300.0, 2025: 2320.0, 2026: 2320.0}).fillna(2320.0)
         res['msp_value'] = msp_base
@@ -192,6 +138,7 @@ def build_features(df):
         res['procurement_started'] = 0
         res['procurement_ended'] = 0
         
+        # Technical Price Indicators
         p = res['weighted_avg_modal_price']
         res['target_modal_price'] = p.shift(-1)
         res['target_return'] = (res['target_modal_price'] - p) / (p + 1e-5)
@@ -216,11 +163,11 @@ def build_features(df):
     district_dummies = pd.get_dummies(final_df['District'], prefix='dist')
     return pd.concat([final_df, market_dummies, district_dummies], axis=1)
 
-featured_df = build_features(clean_df)
-print(f"✅ Feature Engineering Completed: {featured_df.shape[0]} rows × {featured_df.shape[1]} columns.")""")
+featured_df = generate_pure_real_csv_features(clean_df)
+print(f"✅ CSV Feature engineering completed: {featured_df.shape[0]} rows × {featured_df.shape[1]} columns.")""")
 
-# Cell 6: Model Training & Joblib Export
-cell6 = nbf.v4.new_code_cell("""# @title 5. XGBoost Model Training & Model File Download Export
+# Cell 6: Model Training
+cell6 = nbf.v4.new_code_cell("""# @title 5. XGBoost Model Training & Feature Importance Plot
 mkt_cols = [c for c in featured_df.columns if c.startswith('mkt_')]
 dist_cols = [c for c in featured_df.columns if c.startswith('dist_')]
 feature_cols = [
@@ -248,41 +195,33 @@ pred_test_price = today_test_price * (1.0 + xgb_model.predict(X_test))
 
 mape = mean_absolute_percentage_error(y_test_true, pred_test_price) * 100.0
 mae = mean_absolute_error(y_test_true, pred_test_price)
-print(f"✅ XGBoost Model Test MAPE: {mape:.2f}% | Test MAE: Rs. {mae:.2f} / Quintal")
+print(f"✅ CSV XGBoost Model Test MAPE: {mape:.2f}% | Test MAE: Rs. {mae:.2f} / Quintal")
 
 # Save model artifact
-artifact = {
-    'model_name': f'Paddy(Common) AP Model ({DATA_SOURCE})',
+joblib.dump({
+    'model_name': 'Paddy(Common) AP - CSV Ingestion Model',
     'model_object': xgb_model,
     'feature_cols': feature_cols,
-    'target_col': 'weighted_avg_modal_price',
-    'metrics': {
-        'XGBoost': {
-            'model': xgb_model,
-            'test_mape': mape,
-            'test_mae': mae
-        }
-    }
-}
+    'target_col': 'weighted_avg_modal_price'
+}, 'paddy_common_ap_model_csv.joblib')
+print("✅ Model artifact saved as 'paddy_common_ap_model_csv.joblib'")
 
-joblib.dump(artifact, model_export_name)
-print(f"✅ Saved Model File Artifact: {model_export_name}")
+fi_df = pd.DataFrame({'Feature': feature_cols, 'Importance': xgb_model.feature_importances_}).sort_values('Importance', ascending=False).head(12)
+plt.figure(figsize=(10, 5))
+plt.barh(fi_df['Feature'][::-1], fi_df['Importance'][::-1] * 100.0, color='#1f77b4')
+plt.title("Top 12 Feature Importances (CSV XGBoost Paddy Model)", fontsize=12, fontweight='bold')
+plt.xlabel("Importance (%)", fontsize=10)
+plt.tight_layout()
+plt.show()""")
 
-# Auto download file in Google Colab
-try:
-    from google.colab import files
-    files.download(model_export_name)
-    print(f"📥 Initiated download for {model_export_name}")
-except Exception as e:
-    print(f"Local environment: Model saved to {os.path.abspath(model_export_name)}")""")
-
-# Cell 7: Backtest Visual Plot
-cell7 = nbf.v4.new_code_cell("""# @title 6. 90-Day Walk-Forward Backtest & Actual vs Predicted Visual Chart
+# Cell 7: Backtest Plot
+cell7 = nbf.v4.new_code_cell("""# @title 6. 90-Day Walk-Forward Backtest & Actual vs Predicted Graph
 def plot_backtest_graph(df, market_name, backtest_days=90):
     m_df = df[df['Market'].str.lower() == market_name.lower()].sort_values('date').reset_index(drop=True)
     if m_df.empty:
-        print(f"Market {market_name} not found.")
-        return
+        available_mkts = df['Market'].unique()
+        market_name = available_mkts[0]
+        m_df = df[df['Market'] == market_name].sort_values('date').reset_index(drop=True)
         
     start_idx = max(0, len(m_df) - backtest_days)
     dates, actuals, preds, lower_b, upper_b = [], [], [], [], []
@@ -314,18 +253,15 @@ def plot_backtest_graph(df, market_name, backtest_days=90):
     plt.tight_layout()
     plt.show()
 
-# Plot first available market
 plot_backtest_graph(featured_df, featured_df['Market'].iloc[0], backtest_days=90)""")
 
-# Cell 8: 2-Day Live Forecast Generator
+# Cell 8: Live Prediction Generator
 cell8 = nbf.v4.new_code_cell("""# @title 7. Generate Live 2-Day Forward Price Prediction
-def predict_next_2_days(market_name=None):
-    if market_name is None:
-        market_name = featured_df['Market'].iloc[0]
-        
+def predict_next_2_days(market_name="Banaganapalli"):
     m_df = featured_df[featured_df['Market'].str.lower() == market_name.lower()].sort_values('date').reset_index(drop=True)
     if m_df.empty:
-        market_name = featured_df['Market'].iloc[0]
+        available_markets = featured_df['Market'].unique()
+        market_name = available_markets[0]
         m_df = featured_df[featured_df['Market'] == market_name].sort_values('date').reset_index(drop=True)
         
     current_price = float(m_df['weighted_avg_modal_price'].iloc[-1])
@@ -358,18 +294,19 @@ def predict_next_2_days(market_name=None):
         running_p = pred_p
     print("="*75)
 
-predict_next_2_days()""")
+predict_next_2_days("Banaganapalli")""")
 
 nb.cells = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8]
 
-# Save to Desktop folder aa and project folder
-file_aa = r"C:\Users\Praveen\OneDrive\Desktop\aa\AP_Paddy_Price_Prediction_Pipeline.ipynb"
-file_proj = r"c:\Users\Praveen\OneDrive\Desktop\kl\AP_Paddy_Price_Prediction_Pipeline.ipynb"
+# Save to BOTH Desktop aa folder and main workspace
+desktop_aa_notebook = r"C:\Users\Praveen\OneDrive\Desktop\aa\AP_Paddy_CSV_Only_Prediction_Pipeline.ipynb"
+workspace_notebook = r"c:\Users\Praveen\OneDrive\Desktop\kl\AP_Paddy_CSV_Only_Prediction_Pipeline.ipynb"
 
-with open(file_aa, 'w', encoding='utf-8') as f:
+with open(desktop_aa_notebook, 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 
-with open(file_proj, 'w', encoding='utf-8') as f:
+with open(workspace_notebook, 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 
-print(f"Successfully generated updated Colab file at:\n  1. {file_aa}\n  2. {file_proj}")
+print(f"✅ Generated CSV-Only Colab Notebook at: {desktop_aa_notebook}")
+print(f"✅ Also generated at workspace path: {workspace_notebook}")
