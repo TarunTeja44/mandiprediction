@@ -1,7 +1,8 @@
 import os
 import sys
-import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 import pandas as pd
 import numpy as np
@@ -15,7 +16,8 @@ CLEANED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_
 RAW_ARRIVAL_CSV = r"C:\Users\Praveen\OneDrive\Desktop\All_Type_of_Report_(All_Grades)_05-08-2026_09-32-20_PM.csv"
 PROCUREMENT_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'procurement_events.csv')
 WEATHER_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'weather_cleaned.csv')
-FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_top10_ap_featured.csv')
+FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_weighted_avg_featured.csv')
+LEGACY_FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_top10_ap_featured.csv')
 
 def load_arrival_data():
     df = pd.read_csv(RAW_ARRIVAL_CSV, header=1)
@@ -61,6 +63,11 @@ def build_paddy_features():
         res['modal_price'] = res['modal_price'].ffill().bfill()
         res['min_price'] = res['min_price'].ffill().bfill()
         res['max_price'] = res['max_price'].ffill().bfill()
+        res['weighted_avg_modal_price'] = (
+            0.60 * res['modal_price'] +
+            0.20 * res['min_price'] +
+            0.20 * res['max_price']
+        ).ffill().bfill()
         
         # Calendar units
         dow = res['date'].dt.dayofweek
@@ -110,30 +117,40 @@ def build_paddy_features():
         res['procurement_started'] = res['procurement_started'].fillna(0)
         res['procurement_ended'] = res['procurement_ended'].fillna(0)
         
-        # Price Lags & Targets
-        p = res['modal_price']
+        # Price Lags & Targets on the weighted average modal price
+        p = res['weighted_avg_modal_price']
         res['target_modal_price'] = p.shift(-1)
         res['target_return'] = (res['target_modal_price'] - p) / (p + 1e-5)
         
         res['lag_1'] = p.shift(1)
         res['lag_3'] = p.shift(3)
         res['lag_7'] = p.shift(7)
+        res['lag_14'] = p.shift(14)
         
         res['ret_1'] = (p - res['lag_1']) / (res['lag_1'] + 1e-5)
         res['ret_3'] = (p - res['lag_3']) / (res['lag_3'] + 1e-5)
         res['ret_7'] = (p - res['lag_7']) / (res['lag_7'] + 1e-5)
+        res['ret_14'] = (p - res['lag_14']) / (res['lag_14'] + 1e-5)
         
         res['rolling_mean_7'] = p.shift(1).rolling(7, min_periods=2).mean()
         res['rolling_mean_14'] = p.shift(1).rolling(14, min_periods=3).mean()
+        res['rolling_mean_30'] = p.shift(1).rolling(30, min_periods=5).mean()
         res['rolling_std_7'] = p.shift(1).rolling(7, min_periods=2).std().fillna(0.0)
         res['rolling_std_14'] = p.shift(1).rolling(14, min_periods=3).std().fillna(0.0)
+        res['rolling_std_30'] = p.shift(1).rolling(30, min_periods=5).std().fillna(0.0)
         
         res['ratio_ma7'] = p / (res['rolling_mean_7'] + 1e-5)
         res['ratio_ma14'] = p / (res['rolling_mean_14'] + 1e-5)
+        res['ratio_ma30'] = p / (res['rolling_mean_30'] + 1e-5)
+        
+        res['seasonal_ma_7'] = p.shift(1).rolling(7, min_periods=2).mean().fillna(0.0)
+        res['seasonal_ma_30'] = p.shift(1).rolling(30, min_periods=5).mean().fillna(0.0)
+        res['seasonal_trend'] = res['rolling_mean_14'] - res['rolling_mean_30']
         
         res['is_harvest_season'] = np.where(res['month'].isin([10, 11, 12, 4, 5]), 1, 0)
+        res['is_monsoon_season'] = np.where(res['month'].isin([6, 7, 8, 9]), 1, 0)
         
-        clean_m = res.dropna(subset=['lag_3', 'rolling_mean_7', 'target_modal_price']).reset_index(drop=True)
+        clean_m = res.dropna(subset=['lag_14', 'rolling_mean_7', 'rolling_mean_30', 'target_modal_price']).reset_index(drop=True)
         processed_markets.append(clean_m)
         
     final_df = pd.concat(processed_markets, ignore_index=True)
@@ -146,6 +163,8 @@ def build_paddy_features():
     final_df = pd.concat([final_df, market_dummies, district_dummies], axis=1)
     
     final_df.to_csv(FEATURED_CSV, index=False, encoding='utf-8-sig')
+    if LEGACY_FEATURED_CSV != FEATURED_CSV:
+        final_df.to_csv(LEGACY_FEATURED_CSV, index=False, encoding='utf-8-sig')
     print(f"  Saved Paddy(Common) featured CSV: {FEATURED_CSV}")
     print(f"  Shape: {final_df.shape}")
     print(f"  Date range: {final_df['date'].min().strftime('%Y-%m-%d')} to {final_df['date'].max().strftime('%Y-%m-%d')}")

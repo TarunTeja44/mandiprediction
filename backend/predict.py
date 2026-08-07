@@ -1,150 +1,384 @@
-import sys, io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+import sys
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 import os
 import pandas as pd
 import numpy as np
 import joblib
 import datetime
+import warnings
+warnings.filterwarnings('ignore')
 
-def generate_multi_market_forecast(market="Jaggampet", model_preference="XGBoost"):
+try:
+    from prophet import Prophet
+    HAS_PROPHET = True
+except ImportError:
+    HAS_PROPHET = False
+
+try:
+    import pmdarima as pm
+    HAS_ARIMA = True
+except ImportError:
+    HAS_ARIMA = False
+
+
+def _resolve_model_for_market(artifact, market, model_preference="Auto"):
+    """
+    Resolve the best model for a given market using regime-based assignment.
+    model_preference can be: 'Auto', 'Prophet', 'ARIMA', 'XGBoost', 'GradientBoosting', 'Naive'
+    """
+    assignment = artifact.get('market_model_assignment', {})
+    regimes = artifact.get('market_regimes', {})
+
+    if model_preference == "Auto":
+        # Use regime-based assignment
+        assigned = assignment.get(market, 'Naive')
+    else:
+        assigned = model_preference
+
+    # Try to find the requested model
+    if assigned == 'Prophet':
+        prophet_models = artifact.get('prophet_market_models', {})
+        if market in prophet_models:
+            return prophet_models[market], 'Prophet', artifact.get('prophet_exog_cols', {}).get(market, [])
+        # Fallback
+        assigned = 'ARIMA'
+
+    if assigned == 'ARIMA':
+        arima_models = artifact.get('arima_market_models', {})
+        if market in arima_models:
+            return arima_models[market], 'ARIMA', artifact.get('arima_exog_cols', {}).get(market, [])
+        # Fallback
+        assigned = 'GradientBoosting'
+
+    if assigned == 'GradientBoosting':
+        gb_models = artifact.get('gb_market_models', {})
+        if market in gb_models:
+            return gb_models[market], 'GradientBoosting', []
+        # Fallback
+        assigned = 'XGBoost'
+
+    if assigned == 'XGBoost':
+        xgb_model = artifact.get('xgb_model')
+        if xgb_model is not None:
+            return xgb_model, 'XGBoost', []
+
+    # Final fallback: Naive
+    return None, 'Naive', []
+
+
+def _generate_prophet_forecast(model, last_date, periods, exog_cols, m_df):
+    """Generate multi-step Prophet forecast."""
+    future_dates = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=periods, freq='D')
+    future_df = pd.DataFrame({'ds': future_dates})
+
+    # Fill exogenous regressors with last known values
+    for col in exog_cols:
+        if col in m_df.columns:
+            last_val = float(m_df[col].iloc[-1]) if not m_df[col].isna().all() else 0.0
+            future_df[col] = last_val
+
+    forecast = model.predict(future_df)
+
+    preds = []
+    for i in range(periods):
+        preds.append({
+            'yhat': float(forecast['yhat'].iloc[i]),
+            'yhat_lower': float(forecast['yhat_lower'].iloc[i]),
+            'yhat_upper': float(forecast['yhat_upper'].iloc[i]),
+            'date': future_dates[i]
+        })
+    return preds
+
+
+def _generate_arima_forecast(model, periods, exog_cols, m_df):
+    """Generate multi-step ARIMA forecast."""
+    # Build future exogenous matrix from last known values
+    future_exog = None
+    if exog_cols:
+        last_vals = {}
+        for col in exog_cols:
+            if col in m_df.columns:
+                last_vals[col] = float(m_df[col].iloc[-1]) if not m_df[col].isna().all() else 0.0
+            else:
+                last_vals[col] = 0.0
+        future_exog = np.tile(list(last_vals.values()), (periods, 1))
+
+    forecast, conf_int = model.predict(n_periods=periods, X=future_exog, return_conf_int=True, alpha=0.20)
+    return forecast, conf_int
+
+
+def _build_model_input_frame(base_row, feature_cols, current_price, history_prices):
+    """Build feature input for ML models (GB/XGBoost)."""
+    model_inputs = base_row.copy()
+    model_inputs = model_inputs.reindex(columns=feature_cols, fill_value=0.0)
+    if 'weighted_avg_modal_price' in base_row.index:
+        model_inputs['weighted_avg_modal_price'] = float(current_price)
+    if len(history_prices) >= 1:
+        model_inputs['lag_1'] = float(history_prices[-1])
+    if len(history_prices) >= 3:
+        model_inputs['lag_3'] = float(history_prices[-3])
+    if len(history_prices) >= 7:
+        model_inputs['lag_7'] = float(history_prices[-7])
+    if len(history_prices) >= 14:
+        model_inputs['lag_14'] = float(history_prices[-14])
+
+    recent_window = np.asarray(history_prices[-7:], dtype=float)
+    if recent_window.size:
+        recent_mean = float(np.mean(recent_window))
+        model_inputs['rolling_mean_7'] = recent_mean
+        model_inputs['rolling_mean_14'] = float(np.mean(recent_window[-min(7, len(recent_window)):]))
+        model_inputs['rolling_mean_30'] = float(np.mean(recent_window[-min(7, len(recent_window)):]))
+        model_inputs['rolling_std_7'] = float(np.std(recent_window))
+        model_inputs['rolling_std_14'] = float(np.std(recent_window[-min(7, len(recent_window)):]))
+        model_inputs['rolling_std_30'] = float(np.std(recent_window[-min(7, len(recent_window)):]))
+    return model_inputs.fillna(0.0)
+
+
+def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto"):
+    """
+    Generate 7-day price forecast for a given market using regime-based model selection.
+    Supports: Auto, Prophet, ARIMA, XGBoost, GradientBoosting, Naive
+    """
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir) if os.path.basename(script_dir) == 'backend' else script_dir
-    
+
     model_path = os.path.join(project_root, 'backend', 'models', 'paddy_common_ap_model.joblib')
     csv_path = os.path.join(project_root, 'backend', 'data', 'processed', 'paddy_common_weighted_avg_featured.csv')
-    
+
     if not os.path.exists(csv_path):
-        csv_path = os.path.join(project_root, 'backend', 'data', 'processed', 'paddy_common_2021_2026_featured.csv')
-        
+        csv_path = os.path.join(project_root, 'backend', 'data', 'processed', 'paddy_common_top10_ap_featured.csv')
+
     artifact = joblib.load(model_path)
-    metrics = artifact['metrics']
-    feature_cols = artifact['feature_cols']
+    feature_cols = artifact.get('feature_cols', [])
     commodity_name = artifact.get('commodity', 'Paddy(Common)')
     target_type = artifact.get('target_type', 'Weighted Average Modal Price (60% Modal + 20% Min + 20% Max)')
-    
-    if model_preference in metrics and metrics[model_preference]['model'] is not None:
-        model_obj = metrics[model_preference]['model']
-        active_model_name = model_preference
-    else:
-        model_obj = metrics['XGBoost']['model'] if 'XGBoost' in metrics and metrics['XGBoost']['model'] is not None else artifact['model_object']
-        active_model_name = 'XGBoost' if model_obj is not None else artifact['model_name']
-        
+    market_regimes = artifact.get('market_regimes', {})
+    forecast_horizon = artifact.get('forecast_horizon', 7)
+
     df = pd.read_csv(csv_path)
     df['date'] = pd.to_datetime(df['date'])
-    
+
+    # Match market
     m_df = df[df['Market'].str.lower() == market.lower()]
     if m_df.empty:
         available_markets = df['Market'].unique()
         market = available_markets[0]
         m_df = df[df['Market'] == market]
-        
+
     m_df = m_df.sort_values('date').reset_index(drop=True)
     district_name = str(m_df['District'].iloc[-1]) if 'District' in m_df.columns else "Andhra Pradesh"
-    
-    # Check if weighted_avg_modal_price exists
+
     if 'weighted_avg_modal_price' not in m_df.columns:
         m_df['weighted_avg_modal_price'] = 0.60 * m_df['modal_price'] + 0.20 * m_df['min_price'] + 0.20 * m_df['max_price']
-        
+
+    # Regime info
+    regime_info = market_regimes.get(market, {'regime': 'unknown', 'std': 0.0, 'cv_pct': 0.0})
+    regime = regime_info.get('regime', 'unknown')
+
     price_diffs = m_df['weighted_avg_modal_price'].diff().dropna()
     daily_vol = float(price_diffs.std()) if len(price_diffs) > 5 else 25.0
     typical_band = max(20.0, round(daily_vol * 1.645, 1))
-    
-    volatile_markets = ['machilipatnam', 'visakhapatnam', 'jaggampet', 'kuchinapudi']
-    if market.lower() in volatile_markets:
-        market_regime = "Active Trading Hub (Higher Volatility)"
-        market_note = f"Active market with daily price moves. Expected daily trading band for Weighted Average Modal Price: ±Rs. {typical_band:.0f} / Quintal."
+
+    if regime == 'active':
+        market_regime_label = "Active Trading Hub (Higher Volatility)"
+        market_note = f"Active market with daily price moves. Expected daily trading band: ±Rs. {typical_band:.0f} / Quintal."
+    elif regime == 'low_volatility':
+        market_regime_label = "Low Volatility Market (Moderate Trading)"
+        market_note = f"Moderate price movement market. Typical daily band: ±Rs. {typical_band:.0f} / Quintal."
     else:
-        market_regime = "Baseline Government MSP Hub (Sticky Price)"
-        market_note = f"Prices in this APMC are sticky around government MSP support. Daily moves are gradual; typical band is ±Rs. {typical_band:.0f} / Quintal."
-        
+        market_regime_label = "Flat / MSP-Sticky Market"
+        market_note = f"Prices in this APMC are sticky around government MSP support. Typical band: ±Rs. {typical_band:.0f} / Quintal."
+
+    # Resolve model
+    model_obj, active_model_name, exog_cols = _resolve_model_for_market(artifact, market, model_preference)
+
     today_real = datetime.date(2026, 8, 5)
     current_date = today_real
-    
     last_row = m_df.iloc[-1]
     current_price = float(last_row['weighted_avg_modal_price'])
-    
-    print(f"\n[Weighted Average Modal Predict Engine] Market: {market}, District: {district_name}, AP")
-    print(f"  Commodity          : {commodity_name}")
-    print(f"  Target Price Metric: {target_type}")
-    print(f"  Current Date       : {current_date.strftime('%Y-%m-%d')} (TODAY)")
-    print(f"  Weighted Avg Price : Rs. {current_price:.2f} / Quintal")
-    print(f"  Active Model       : {active_model_name}")
-    
-    predictions = []
-    running_price = current_price
-    recent_history = m_df.copy()
-    
-    for step in range(1, 3):
-        forecast_date = current_date + datetime.timedelta(days=step)
-        last_h_row = recent_history.iloc[-1]
-        
-        feat_dict = {}
-        for col in feature_cols:
-            if col.startswith('mkt_'):
-                mkt_name = col.replace('mkt_', '')
-                feat_dict[col] = 1 if mkt_name.lower() == market.lower() else 0
-            elif col.startswith('dist_'):
-                dist_col_name = col.replace('dist_', '')
-                feat_dict[col] = 1 if dist_col_name.lower() == district_name.lower() else 0
-            elif col in last_h_row.index and pd.notna(last_h_row[col]):
-                feat_dict[col] = float(last_h_row[col])
-            else:
-                feat_dict[col] = 0.0
-                
-        p = recent_history['weighted_avg_modal_price']
-        lag_1 = p.iloc[-1]
-        lag_3 = p.iloc[-3] if len(p) >= 3 else p.iloc[-1]
-        lag_7 = p.iloc[-7] if len(p) >= 7 else p.iloc[-1]
-        
-        rolling_mean_7 = p.iloc[-7:].mean()
-        rolling_mean_14 = p.iloc[-14:].mean() if len(p) >= 14 else p.iloc[-7:].mean()
-        
-        feat_dict['ret_1'] = (running_price - lag_1) / (lag_1 + 1e-5)
-        feat_dict['ret_3'] = (running_price - lag_3) / (lag_3 + 1e-5)
-        feat_dict['ret_7'] = (running_price - lag_7) / (lag_7 + 1e-5)
-        feat_dict['ratio_ma7'] = running_price / (rolling_mean_7 + 1e-5)
-        feat_dict['ratio_ma14'] = running_price / (rolling_mean_14 + 1e-5)
-        
-        X_curr = pd.DataFrame([feat_dict])[feature_cols].fillna(0.0)
-        
-        if active_model_name == 'Naive' or model_obj is None:
-            pred_price = running_price
-        else:
-            pred_ret = float(model_obj.predict(X_curr)[0])
-            pred_price = running_price * (1.0 + pred_ret)
-            
-        band_scale = typical_band * (1.0 if step == 1 else 1.3)
-        lower_bound = round(max(0.0, pred_price - band_scale), 1)
-        upper_bound = round(pred_price + band_scale, 1)
-        
-        price_change = pred_price - running_price
-        if abs(price_change) < 5.0:
-            trend = "STABLE"
-        elif price_change > 0:
-            trend = "BULLISH / UPWARD"
-        else:
-            trend = "BEARISH / DOWNWARD"
-            
-        horizon_label = "Tomorrow (Day +1)" if step == 1 else "Day After Tomorrow (Day +2)"
-        
-        pred_item = {
-            'horizon_day': horizon_label,
-            'date': forecast_date.strftime('%Y-%m-%d'),
-            'expected_weighted_avg_price': round(pred_price, 2),
-            'trend': trend,
-            'expected_trading_range': [lower_bound, upper_bound],
-            'typical_daily_range_rs': f"±Rs. {band_scale:.0f}",
-            'price_change_rs': round(price_change, 2)
-        }
-        predictions.append(pred_item)
-        
-        new_row = recent_history.iloc[-1].copy()
-        new_row['date'] = forecast_date
-        new_row['weighted_avg_modal_price'] = pred_price
-        recent_history = pd.concat([recent_history, pd.DataFrame([new_row])], ignore_index=True)
-        running_price = pred_price
+    last_date = pd.to_datetime(m_df['date'].iloc[-1])
 
+    print(f"\n[Predict Engine] Market: {market}, District: {district_name}, AP")
+    print(f"  Commodity          : {commodity_name}")
+    print(f"  Target Metric      : {target_type}")
+    print(f"  Current Date       : {current_date.strftime('%Y-%m-%d')}")
+    print(f"  Weighted Avg Price : Rs. {current_price:.2f} / Quintal")
+    print(f"  Regime             : {regime} (std=Rs.{regime_info.get('std', 0):.1f})")
+    print(f"  Active Model       : {active_model_name}")
+    print(f"  Forecast Horizon   : {forecast_horizon} days")
+
+    predictions = []
+
+    # ======================== PROPHET FORECAST ========================
+    if active_model_name == 'Prophet' and model_obj is not None and HAS_PROPHET:
+        # Always forecast from current_date, not from last market data date
+        forecast_start = pd.Timestamp(current_date)
+        prophet_preds = _generate_prophet_forecast(model_obj, forecast_start, forecast_horizon, exog_cols, m_df)
+
+        for step, pred_info in enumerate(prophet_preds, 1):
+            pred_price = pred_info['yhat']
+            lower_bound = pred_info['yhat_lower']
+            upper_bound = pred_info['yhat_upper']
+            forecast_date = pred_info['date']
+
+            price_change = pred_price - current_price
+            if abs(price_change) < 5.0:
+                trend = "STABLE"
+            elif price_change > 0:
+                trend = "BULLISH / UPWARD"
+            else:
+                trend = "BEARISH / DOWNWARD"
+
+            horizon_labels = {
+                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
+                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+            }
+
+            pred_item = {
+                'horizon_day': horizon_labels.get(step, f"Day +{step}"),
+                'date': forecast_date.strftime('%Y-%m-%d'),
+                'expected_weighted_avg_price': round(pred_price, 2),
+                'trend': trend,
+                'expected_trading_range': [round(max(0, lower_bound), 1), round(upper_bound, 1)],
+                'typical_daily_range_rs': f"±Rs. {round((upper_bound - lower_bound) / 2, 0):.0f}",
+                'price_change_rs': round(price_change, 2),
+                'confidence_interval': [round(lower_bound, 2), round(upper_bound, 2)]
+            }
+            predictions.append(pred_item)
+
+    # ======================== ARIMA FORECAST ========================
+    elif active_model_name == 'ARIMA' and model_obj is not None and HAS_ARIMA:
+        arima_forecast, arima_conf = _generate_arima_forecast(model_obj, forecast_horizon, exog_cols, m_df)
+
+        for step in range(forecast_horizon):
+            forecast_date = current_date + datetime.timedelta(days=step + 1)
+            pred_price = float(arima_forecast[step])
+            lower_bound = float(arima_conf[step, 0])
+            upper_bound = float(arima_conf[step, 1])
+
+            price_change = pred_price - current_price
+            if abs(price_change) < 5.0:
+                trend = "STABLE"
+            elif price_change > 0:
+                trend = "BULLISH / UPWARD"
+            else:
+                trend = "BEARISH / DOWNWARD"
+
+            horizon_labels = {
+                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
+                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+            }
+
+            pred_item = {
+                'horizon_day': horizon_labels.get(step + 1, f"Day +{step + 1}"),
+                'date': forecast_date.strftime('%Y-%m-%d'),
+                'expected_weighted_avg_price': round(pred_price, 2),
+                'trend': trend,
+                'expected_trading_range': [round(max(0, lower_bound), 1), round(upper_bound, 1)],
+                'typical_daily_range_rs': f"±Rs. {round((upper_bound - lower_bound) / 2, 0):.0f}",
+                'price_change_rs': round(price_change, 2),
+                'confidence_interval': [round(lower_bound, 2), round(upper_bound, 2)]
+            }
+            predictions.append(pred_item)
+
+    # ======================== ML MODEL FORECAST (XGBoost/GB) ========================
+    elif active_model_name in ('XGBoost', 'GradientBoosting') and model_obj is not None:
+        history_prices = m_df['weighted_avg_modal_price'].astype(float).tolist()
+        feature_history = m_df[feature_cols].fillna(0.0).copy() if feature_cols else pd.DataFrame()
+        step_price = current_price
+
+        for step in range(1, forecast_horizon + 1):
+            forecast_date = current_date + datetime.timedelta(days=step)
+
+            try:
+                base_row = feature_history.iloc[[-1]].copy()
+                model_input = _build_model_input_frame(base_row.iloc[0], feature_cols, step_price, history_prices)
+
+                if active_model_name == 'XGBoost':
+                    # XGBoost predicts change ratio
+                    change_pred = float(np.asarray(model_obj.predict(model_input.to_frame().T))[0])
+                    pred_price = step_price * (1.0 + change_pred)
+                else:
+                    # GradientBoosting predicts absolute price
+                    pred_price = float(np.asarray(model_obj.predict(model_input.to_frame().T))[0])
+
+                if not np.isfinite(pred_price):
+                    pred_price = step_price
+            except Exception:
+                pred_price = step_price
+
+            # Clip to reasonable range
+            pred_price = float(np.clip(pred_price, current_price - 300.0, current_price + 300.0))
+
+            band_scale = typical_band * (1.0 + 0.15 * (step - 1))
+            lower_bound = round(max(0.0, pred_price - band_scale), 1)
+            upper_bound = round(pred_price + band_scale, 1)
+
+            price_change = pred_price - current_price
+            if abs(price_change) < 5.0:
+                trend = "STABLE"
+            elif price_change > 0:
+                trend = "BULLISH / UPWARD"
+            else:
+                trend = "BEARISH / DOWNWARD"
+
+            horizon_labels = {
+                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
+                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+            }
+
+            pred_item = {
+                'horizon_day': horizon_labels.get(step, f"Day +{step}"),
+                'date': forecast_date.strftime('%Y-%m-%d'),
+                'expected_weighted_avg_price': round(pred_price, 2),
+                'trend': trend,
+                'expected_trading_range': [lower_bound, upper_bound],
+                'typical_daily_range_rs': f"±Rs. {band_scale:.0f}",
+                'price_change_rs': round(price_change, 2),
+                'confidence_interval': [lower_bound, upper_bound]
+            }
+            predictions.append(pred_item)
+
+            # Step forward
+            history_prices.append(pred_price)
+            step_price = pred_price
+            if not feature_history.empty:
+                next_row = feature_history.iloc[[-1]].copy()
+                next_row = next_row.reindex(columns=feature_cols, fill_value=0.0)
+                next_row = _build_model_input_frame(next_row.iloc[0], feature_cols, step_price, history_prices)
+                feature_history = pd.concat([feature_history, next_row.to_frame().T], ignore_index=True)
+
+    # ======================== NAIVE FORECAST ========================
+    else:
+        for step in range(1, forecast_horizon + 1):
+            forecast_date = current_date + datetime.timedelta(days=step)
+            pred_price = current_price  # Naive = repeat last price
+
+            band_scale = typical_band * (1.0 + 0.1 * (step - 1))
+            lower_bound = round(max(0.0, pred_price - band_scale), 1)
+            upper_bound = round(pred_price + band_scale, 1)
+
+            horizon_labels = {
+                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
+                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+            }
+
+            pred_item = {
+                'horizon_day': horizon_labels.get(step, f"Day +{step}"),
+                'date': forecast_date.strftime('%Y-%m-%d'),
+                'expected_weighted_avg_price': round(pred_price, 2),
+                'trend': 'STABLE',
+                'expected_trading_range': [lower_bound, upper_bound],
+                'typical_daily_range_rs': f"±Rs. {band_scale:.0f}",
+                'price_change_rs': 0.0,
+                'confidence_interval': [lower_bound, upper_bound]
+            }
+            predictions.append(pred_item)
+
+    # ======================== OUTPUT ========================
     output_payload = {
         'market': market,
         'district': district_name,
@@ -153,28 +387,30 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="XGBoost
         'target_metric': target_type,
         'current_date': current_date.strftime('%Y-%m-%d'),
         'current_weighted_avg_price': round(current_price, 2),
-        'market_regime': market_regime,
+        'market_regime': market_regime_label,
+        'market_regime_type': regime,
+        'regime_std': regime_info.get('std', 0),
         'market_note': market_note,
         'model_used': active_model_name,
+        'forecast_horizon_days': forecast_horizon,
         'predictions': predictions
     }
-    
-    print("="*75)
-    print(f"WEIGHTED AVERAGE MODAL PRICE FORECAST ({active_model_name} Model - {market}, {district_name})")
-    print("="*75)
+
+    print("=" * 85)
+    print(f"7-DAY FORECAST ({active_model_name} — {market}, {district_name})")
+    print("=" * 85)
     print(f"Today's Weighted Avg Price ({current_date.strftime('%Y-%m-%d')}): Rs. {current_price:.2f} / Quintal")
-    print(f"Target Metric: {target_type}")
-    print(f"Market Regime: {market_regime}")
-    print(f"Context Note : {market_note}\n")
+    print(f"Regime: {regime} | Model: {active_model_name}\n")
     for p in predictions:
         print(f"  * {p['horizon_day']} ({p['date']}):")
-        print(f"      Trend Direction   : {p['trend']}")
-        print(f"      Expected Wt Avg   : Rs. {p['expected_weighted_avg_price']:.2f} / Quintal")
-        print(f"      Expected Trading Band: [Rs. {p['expected_trading_range'][0]:.1f} – Rs. {p['expected_trading_range'][1]:.1f}]")
-        print(f"      Calibrated Scale  : {p['typical_daily_range_rs']}\n")
-    print("="*75)
-    
+        print(f"      Trend       : {p['trend']}")
+        print(f"      Expected    : Rs. {p['expected_weighted_avg_price']:.2f} / Quintal")
+        print(f"      Range       : [Rs. {p['expected_trading_range'][0]:.1f} – Rs. {p['expected_trading_range'][1]:.1f}]")
+        print(f"      Change      : Rs. {p['price_change_rs']:+.2f}\n")
+    print("=" * 85)
+
     return output_payload
 
+
 if __name__ == '__main__':
-    generate_multi_market_forecast(market="Jaggampet", model_preference="XGBoost")
+    generate_multi_market_forecast(market="Jaggampet", model_preference="Auto")
