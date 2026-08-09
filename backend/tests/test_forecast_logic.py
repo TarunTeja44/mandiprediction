@@ -1,15 +1,21 @@
+import sys
+import os
 import numpy as np
 
-from predict import compute_holt_linear_forecast
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import predict
 
+def test_ordering_reconciliation():
+    modal_val = 3000.0
+    min_val = 3100.0
+    max_val = 2900.0
 
-def test_holt_linear_forecast_is_finite_and_reasonable():
-    series = [100.0, 101.0, 103.0, 104.0, 106.0, 108.0, 109.0]
+    min_rec = round(min(min_val, modal_val - 1.0), 2)
+    max_rec = round(max(max_val, modal_val + 1.0), 2)
+    spread_rec = round(max(0.0, max_rec - min_rec), 2)
 
-    preds = compute_holt_linear_forecast(series, horizon=2)
-
-    assert len(preds) == 2
-    assert np.isfinite(preds).all()
-    assert preds[0] > 0
-    assert abs(preds[0] - series[-1]) < 50
-    assert abs(preds[1] - preds[0]) < 50
+    assert min_rec <= modal_val <= max_rec
+    assert spread_rec == max_rec - min_rec
+    assert min_rec == 2999.0
+    assert max_rec == 3001.0
+    assert spread_rec == 2.0

@@ -13,15 +13,36 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR) if os.path.basename(BASE_DIR) == 'backend' else BASE_DIR
 
 CLEANED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_top10_ap_cleaned.csv')
-RAW_ARRIVAL_CSV = r"C:\Users\Praveen\OneDrive\Desktop\All_Type_of_Report_(All_Grades)_05-08-2026_09-32-20_PM.csv"
+# Arrival CSV path handling (uses local arrival CSV if present)
+DESKTOP_DIR = os.path.dirname(PROJECT_ROOT)
+LOCAL_ARRIVAL_CSV = os.path.join(PROJECT_ROOT, "All_Type_of_Report_(All_Grades)_09-08-2026_07-22-58_PM.csv")
+LEGACY_ARRIVAL_CSV = r"C:\Users\Praveen\OneDrive\Desktop\All_Type_of_Report_(All_Grades)_05-08-2026_09-32-20_PM.csv"
+
 PROCUREMENT_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'procurement_events.csv')
 WEATHER_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'weather_cleaned.csv')
 FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_weighted_avg_featured.csv')
 LEGACY_FEATURED_CSV = os.path.join(PROJECT_ROOT, 'backend', 'data', 'processed', 'paddy_common_top10_ap_featured.csv')
 
 def load_arrival_data():
-    df = pd.read_csv(RAW_ARRIVAL_CSV, header=1)
-    df.rename(columns={'Date': 'date_str', 'Arrival Quantity 01-01-2021 to 03-08-2026': 'arrival_qty_mt'}, inplace=True)
+    raw_path = LOCAL_ARRIVAL_CSV if os.path.exists(LOCAL_ARRIVAL_CSV) else LEGACY_ARRIVAL_CSV
+    if not os.path.exists(raw_path):
+        # Find any matching arrival CSV in PROJECT_ROOT
+        import glob
+        matches = glob.glob(os.path.join(PROJECT_ROOT, "All_Type_of_Report_*.csv")) + glob.glob(os.path.join(DESKTOP_DIR, "All_Type_of_Report_*.csv"))
+        raw_path = matches[0] if matches else raw_path
+
+    print(f"Loading arrival data from: {os.path.basename(raw_path)}")
+    try:
+        df = pd.read_csv(raw_path, header=1, encoding='utf-8')
+    except Exception:
+        df = pd.read_csv(raw_path, header=1, encoding='latin1')
+    
+    # Identify arrival column dynamically
+    arr_col = [c for c in df.columns if 'Arrival' in c and 'Quantity' in c]
+    date_col = 'Date' if 'Date' in df.columns else df.columns[5]
+    arr_name = arr_col[0] if arr_col else df.columns[6]
+
+    df.rename(columns={date_col: 'date_str', arr_name: 'arrival_qty_mt'}, inplace=True)
     df['date'] = pd.to_datetime(df['date_str'], format='%d-%m-%Y', errors='coerce')
     df['arrival_qty_mt'] = pd.to_numeric(df['arrival_qty_mt'], errors='coerce').fillna(0.0)
     
@@ -117,40 +138,67 @@ def build_paddy_features():
         res['procurement_started'] = res['procurement_started'].fillna(0)
         res['procurement_ended'] = res['procurement_ended'].fillna(0)
         
-        # Price Lags & Targets on the weighted average modal price
+        # 5. Price Level & Spread Features (Multi-Target Engineering)
         p = res['weighted_avg_modal_price']
+        mn = res['min_price']
+        mx = res['max_price']
+
+        res['spread'] = (mx - mn).clip(lower=0.0)
+        res['log_spread'] = np.log(res['spread'] + 1.0)
+
+        # Multi-Targets (Shift -1)
         res['target_modal_price'] = p.shift(-1)
+        res['target_min_price'] = mn.shift(-1)
+        res['target_max_price'] = mx.shift(-1)
+        res['target_spread'] = res['spread'].shift(-1)
+        res['target_log_spread'] = res['log_spread'].shift(-1)
+
         res['target_return'] = (res['target_modal_price'] - p) / (p + 1e-5)
-        
+        res['target_min_return'] = (res['target_min_price'] - mn) / (mn + 1e-5)
+        res['target_max_return'] = (res['target_max_price'] - mx) / (mx + 1e-5)
+
+        # Price Lags & Moving Averages (Weighted Avg)
         res['lag_1'] = p.shift(1)
         res['lag_3'] = p.shift(3)
         res['lag_7'] = p.shift(7)
         res['lag_14'] = p.shift(14)
-        
+
+        # Min, Max & Spread Specific Lags
+        res['min_price_lag_1'] = mn.shift(1)
+        res['min_price_rolling_mean_7'] = mn.shift(1).rolling(7, min_periods=2).mean()
+
+        res['max_price_lag_1'] = mx.shift(1)
+        res['max_price_rolling_mean_7'] = mx.shift(1).rolling(7, min_periods=2).mean()
+
+        res['spread_lag_1'] = res['spread'].shift(1)
+        res['spread_rolling_mean_7'] = res['spread'].shift(1).rolling(7, min_periods=2).mean()
+        res['spread_rolling_std_7'] = res['spread'].shift(1).rolling(7, min_periods=2).std().fillna(0.0)
+        res['log_spread_lag_1'] = res['log_spread'].shift(1)
+
         res['ret_1'] = (p - res['lag_1']) / (res['lag_1'] + 1e-5)
         res['ret_3'] = (p - res['lag_3']) / (res['lag_3'] + 1e-5)
         res['ret_7'] = (p - res['lag_7']) / (res['lag_7'] + 1e-5)
         res['ret_14'] = (p - res['lag_14']) / (res['lag_14'] + 1e-5)
-        
+
         res['rolling_mean_7'] = p.shift(1).rolling(7, min_periods=2).mean()
         res['rolling_mean_14'] = p.shift(1).rolling(14, min_periods=3).mean()
         res['rolling_mean_30'] = p.shift(1).rolling(30, min_periods=5).mean()
         res['rolling_std_7'] = p.shift(1).rolling(7, min_periods=2).std().fillna(0.0)
         res['rolling_std_14'] = p.shift(1).rolling(14, min_periods=3).std().fillna(0.0)
         res['rolling_std_30'] = p.shift(1).rolling(30, min_periods=5).std().fillna(0.0)
-        
+
         res['ratio_ma7'] = p / (res['rolling_mean_7'] + 1e-5)
         res['ratio_ma14'] = p / (res['rolling_mean_14'] + 1e-5)
         res['ratio_ma30'] = p / (res['rolling_mean_30'] + 1e-5)
-        
+
         res['seasonal_ma_7'] = p.shift(1).rolling(7, min_periods=2).mean().fillna(0.0)
         res['seasonal_ma_30'] = p.shift(1).rolling(30, min_periods=5).mean().fillna(0.0)
         res['seasonal_trend'] = res['rolling_mean_14'] - res['rolling_mean_30']
-        
+
         res['is_harvest_season'] = np.where(res['month'].isin([10, 11, 12, 4, 5]), 1, 0)
         res['is_monsoon_season'] = np.where(res['month'].isin([6, 7, 8, 9]), 1, 0)
-        
-        clean_m = res.dropna(subset=['lag_14', 'rolling_mean_7', 'rolling_mean_30', 'target_modal_price']).reset_index(drop=True)
+
+        clean_m = res.dropna(subset=['lag_14', 'rolling_mean_7', 'rolling_mean_30', 'target_modal_price', 'target_min_price', 'target_max_price']).reset_index(drop=True)
         processed_markets.append(clean_m)
         
     final_df = pd.concat(processed_markets, ignore_index=True)

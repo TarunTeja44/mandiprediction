@@ -634,7 +634,10 @@
             grid.innerHTML = predictions.map((p, i) => {
                 const trendClass = getTrendClass(p.trend);
                 const changeSign = p.price_change_rs >= 0 ? '+' : '';
-                const range = p.expected_trading_range || p.confidence_interval || [0, 0];
+                const range = p.expected_trading_range || [p.expected_min_price || 0, p.expected_max_price || 0];
+                const minP = p.expected_min_price ?? range[0] ?? 0;
+                const maxP = p.expected_max_price ?? range[1] ?? 0;
+                const spreadP = p.expected_spread ?? (maxP - minP);
                 const dayLabel = p.horizon_day || `Day +${i + 1}`;
 
                 return `
@@ -645,7 +648,8 @@
                         <div class="fc-change" style="color: ${trendClass === 'bullish' ? 'var(--bullish)' : trendClass === 'bearish' ? 'var(--bearish)' : 'var(--stable)'};">
                             ${changeSign}${p.price_change_rs?.toFixed(1) ?? 0}
                         </div>
-                        <div class="fc-range">[₹${range[0]?.toLocaleString()} – ₹${range[1]?.toLocaleString()}]</div>
+                        <div class="fc-range" style="margin-top: 0.2rem;">Range: ₹${minP?.toLocaleString()} – ₹${maxP?.toLocaleString()}</div>
+                        <div class="fc-range" style="color: #3b82f6; font-weight: 500;">Spread: ₹${spreadP?.toFixed(1) ?? 0}</div>
                         <div class="fc-trend-badge ${trendClass}">${p.trend || 'STABLE'}</div>
                     </div>
                 `;

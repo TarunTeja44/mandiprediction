@@ -112,8 +112,10 @@ def _generate_arima_forecast(model, periods, exog_cols, m_df):
 
 def _build_model_input_frame(base_row, feature_cols, current_price, history_prices):
     """Build feature input for ML models (GB/XGBoost)."""
-    model_inputs = base_row.copy()
-    model_inputs = model_inputs.reindex(columns=feature_cols, fill_value=0.0)
+    if isinstance(base_row, pd.Series):
+        model_inputs = base_row.reindex(feature_cols, fill_value=0.0)
+    else:
+        model_inputs = base_row.reindex(columns=feature_cols, fill_value=0.0)
     if 'weighted_avg_modal_price' in base_row.index:
         model_inputs['weighted_avg_modal_price'] = float(current_price)
     if len(history_prices) >= 1:
@@ -351,32 +353,53 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto"):
                 next_row = _build_model_input_frame(next_row.iloc[0], feature_cols, step_price, history_prices)
                 feature_history = pd.concat([feature_history, next_row.to_frame().T], ignore_index=True)
 
-    # ======================== NAIVE FORECAST ========================
-    else:
-        for step in range(1, forecast_horizon + 1):
-            forecast_date = current_date + datetime.timedelta(days=step)
-            pred_price = current_price  # Naive = repeat last price
+    # ======================== MULTI-TARGET PREDICTIONS & RECONCILIATION ========================
+    prophet_min_models = artifact.get('prophet_min_models', {})
+    arima_min_models = artifact.get('arima_min_models', {})
+    prophet_max_models = artifact.get('prophet_max_models', {})
+    arima_max_models = artifact.get('arima_max_models', {})
+    arima_spread_models = artifact.get('arima_spread_models', {})
 
-            band_scale = typical_band * (1.0 + 0.1 * (step - 1))
-            lower_bound = round(max(0.0, pred_price - band_scale), 1)
-            upper_bound = round(pred_price + band_scale, 1)
+    # Predict min series
+    min_preds = []
+    if active_model_name == 'Prophet' and market in prophet_min_models and HAS_PROPHET:
+        pm_preds = _generate_prophet_forecast(prophet_min_models[market], pd.Timestamp(current_date), forecast_horizon, exog_cols, m_df)
+        min_preds = [p['yhat'] for p in pm_preds]
+    elif market in arima_min_models and HAS_ARIMA:
+        ar_preds, _ = _generate_arima_forecast(arima_min_models[market], forecast_horizon, exog_cols, m_df)
+        min_preds = [float(p) for p in ar_preds]
 
-            horizon_labels = {
-                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
-                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
-            }
+    # Predict max series
+    max_preds = []
+    if active_model_name == 'Prophet' and market in prophet_max_models and HAS_PROPHET:
+        pm_preds = _generate_prophet_forecast(prophet_max_models[market], pd.Timestamp(current_date), forecast_horizon, exog_cols, m_df)
+        max_preds = [p['yhat'] for p in pm_preds]
+    elif market in arima_max_models and HAS_ARIMA:
+        ar_preds, _ = _generate_arima_forecast(arima_max_models[market], forecast_horizon, exog_cols, m_df)
+        max_preds = [float(p) for p in ar_preds]
 
-            pred_item = {
-                'horizon_day': horizon_labels.get(step, f"Day +{step}"),
-                'date': forecast_date.strftime('%Y-%m-%d'),
-                'expected_weighted_avg_price': round(pred_price, 2),
-                'trend': 'STABLE',
-                'expected_trading_range': [lower_bound, upper_bound],
-                'typical_daily_range_rs': f"±Rs. {band_scale:.0f}",
-                'price_change_rs': 0.0,
-                'confidence_interval': [lower_bound, upper_bound]
-            }
-            predictions.append(pred_item)
+    # Predict spread series (log-space exponentiated)
+    spread_preds = []
+    if market in arima_spread_models and HAS_ARIMA:
+        ar_log_preds, _ = _generate_arima_forecast(arima_spread_models[market], forecast_horizon, exog_cols, m_df)
+        spread_preds = [max(0.0, float(np.exp(p) - 1.0)) for p in ar_log_preds]
+
+    # Apply reconciliation to all forecast steps
+    for idx, p in enumerate(predictions):
+        modal_val = p['expected_weighted_avg_price']
+        min_val = min_preds[idx] if idx < len(min_preds) else p['expected_trading_range'][0]
+        max_val = max_preds[idx] if idx < len(max_preds) else p['expected_trading_range'][1]
+        spread_val = spread_preds[idx] if idx < len(spread_preds) else (max_val - min_val)
+
+        # Post-processing reconciliation: min <= modal <= max
+        min_rec = round(min(min_val, modal_val - 1.0), 2)
+        max_rec = round(max(max_val, modal_val + 1.0), 2)
+        spread_rec = round(max(0.0, max_rec - min_rec), 2)
+
+        p['expected_min_price'] = min_rec
+        p['expected_max_price'] = max_rec
+        p['expected_spread'] = spread_rec
+        p['expected_trading_range'] = [min_rec, max_rec]
 
     # ======================== OUTPUT ========================
     output_payload = {

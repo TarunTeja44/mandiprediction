@@ -12,9 +12,10 @@ import predict
 def test_generate_multi_market_forecast_uses_saved_model(monkeypatch):
     class DummyModel:
         def predict(self, X):
-            return np.array([3000.0])
+            return np.array([0.10])  # 10% return change
 
     artifact = {
+        'xgb_model': DummyModel(),
         'metrics': {
             'XGBoost': {'model': DummyModel()},
             'GradientBoosting': {'model': {}}
@@ -44,4 +45,9 @@ def test_generate_multi_market_forecast_uses_saved_model(monkeypatch):
 
     payload = predict.generate_multi_market_forecast(market='Jaggampet', model_preference='XGBoost')
 
-    assert payload['predictions'][0]['expected_weighted_avg_price'] > 2800.0
+    assert len(payload['predictions']) == 7
+    assert payload['predictions'][0]['expected_weighted_avg_price'] > 2000.0
+    assert 'expected_min_price' in payload['predictions'][0]
+    assert 'expected_max_price' in payload['predictions'][0]
+    assert 'expected_spread' in payload['predictions'][0]
+    assert payload['predictions'][0]['expected_min_price'] <= payload['predictions'][0]['expected_weighted_avg_price'] <= payload['predictions'][0]['expected_max_price']

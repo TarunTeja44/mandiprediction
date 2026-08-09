@@ -23,8 +23,8 @@ app.add_middleware(
 )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROCESSED_CSV = os.path.join(BASE_DIR, 'data', 'processed', 'paddy_common_top10_ap_cleaned.csv')
-FALLBACK_CSV = os.path.join(BASE_DIR, 'data', 'processed', 'ap_multi_market_rice_cleaned.csv')
+PROCESSED_CSV = os.path.join(BASE_DIR, 'data', 'processed', 'paddy_common_weighted_avg_featured.csv')
+FALLBACK_CSV = os.path.join(BASE_DIR, 'data', 'processed', 'paddy_common_top10_ap_cleaned.csv')
 
 class PredictRequest(BaseModel):
     commodity: str = "Rice"
