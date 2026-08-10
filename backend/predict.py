@@ -197,7 +197,7 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
     # Resolve model
     model_obj, active_model_name, exog_cols = _resolve_model_for_market(artifact, market, model_preference)
 
-    today_real = datetime.date(2026, 8, 5)
+    today_real = datetime.date.today()
     current_date = today_real
     last_row = m_df.iloc[-1]
     current_price = float(last_row['weighted_avg_modal_price'])
@@ -216,7 +216,7 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
 
     # ======================== PROPHET FORECAST ========================
     if active_model_name == 'Prophet' and model_obj is not None and HAS_PROPHET:
-        # Always forecast from current_date, not from last market data date
+        # Forecast starting from current_date (Today)
         forecast_start = pd.Timestamp(current_date)
         prophet_preds = _generate_prophet_forecast(model_obj, forecast_start, forecast_horizon, exog_cols, m_df)
 
@@ -235,8 +235,9 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
                 trend = "BEARISH / DOWNWARD"
 
             horizon_labels = {
-                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
-                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+                1: f"Today ({current_date.strftime('%Y-%m-%d')})",
+                2: f"Tomorrow ({(current_date + datetime.timedelta(days=1)).strftime('%Y-%m-%d')})",
+                3: f"Day +2 ({(current_date + datetime.timedelta(days=2)).strftime('%Y-%m-%d')})"
             }
 
             pred_item = {
@@ -270,8 +271,9 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
                 trend = "BEARISH / DOWNWARD"
 
             horizon_labels = {
-                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
-                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+                1: f"Today ({current_date.strftime('%Y-%m-%d')})",
+                2: f"Tomorrow ({(current_date + datetime.timedelta(days=1)).strftime('%Y-%m-%d')})",
+                3: f"Day +2 ({(current_date + datetime.timedelta(days=2)).strftime('%Y-%m-%d')})"
             }
 
             pred_item = {
@@ -328,8 +330,9 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
                 trend = "BEARISH / DOWNWARD"
 
             horizon_labels = {
-                1: "Tomorrow (Day +1)", 2: "Day +2", 3: "Day +3",
-                4: "Day +4", 5: "Day +5", 6: "Day +6", 7: "Day +7"
+                1: f"Today ({current_date.strftime('%Y-%m-%d')})",
+                2: f"Tomorrow ({(current_date + datetime.timedelta(days=1)).strftime('%Y-%m-%d')})",
+                3: f"Day +2 ({(current_date + datetime.timedelta(days=2)).strftime('%Y-%m-%d')})"
             }
 
             pred_item = {
