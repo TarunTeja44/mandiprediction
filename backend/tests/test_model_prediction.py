@@ -45,7 +45,7 @@ def test_generate_multi_market_forecast_uses_saved_model(monkeypatch):
 
     payload = predict.generate_multi_market_forecast(market='Jaggampet', model_preference='XGBoost')
 
-    assert len(payload['predictions']) == 30
+    assert len(payload['predictions']) == 3
     assert payload['predictions'][0]['expected_weighted_avg_price'] > 2000.0
     assert 'expected_min_price' in payload['predictions'][0]
     assert 'expected_max_price' in payload['predictions'][0]

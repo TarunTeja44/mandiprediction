@@ -102,6 +102,7 @@ def build_paddy_features():
         res = pd.merge(res, arrival_df[['date', 'arrival_qty_mt']], on='date', how='left')
         res['arrival_qty_mt'] = res['arrival_qty_mt'].fillna(0.0)
         res['arrival_lag_1'] = res['arrival_qty_mt'].shift(1).fillna(0.0)
+        res['arrival_3d_mean'] = res['arrival_qty_mt'].shift(1).rolling(3, min_periods=1).mean().fillna(0.0)
         res['arrival_7d_mean'] = res['arrival_qty_mt'].shift(1).rolling(7, min_periods=1).mean().fillna(0.0)
         res['arrival_30d_mean'] = res['arrival_qty_mt'].shift(1).rolling(30, min_periods=1).mean().fillna(0.0)
         res['arrival_change_pct'] = res['arrival_qty_mt'].shift(1).pct_change(1, fill_method=None).fillna(0.0).replace([np.inf, -np.inf], 0.0)
@@ -124,6 +125,7 @@ def build_paddy_features():
         res['humidity'] = res['humidity'].ffill().bfill()
         res['temp_avg'] = res['temp_avg'].ffill().bfill()
         
+        res['rainfall_3d'] = res['rainfall'].shift(1).rolling(3, min_periods=1).sum().fillna(0.0)
         res['rainfall_7d'] = res['rainfall'].shift(1).rolling(7, min_periods=1).sum().fillna(0.0)
         res['rainfall_30d'] = res['rainfall'].shift(1).rolling(30, min_periods=1).sum().fillna(0.0)
         weekly_hist_rain = res.groupby('week_of_year')['rainfall_7d'].transform('mean')
@@ -182,9 +184,11 @@ def build_paddy_features():
         res['ret_7'] = (p - res['lag_7']) / (res['lag_7'] + 1e-5)
         res['ret_14'] = (p - res['lag_14']) / (res['lag_14'] + 1e-5)
 
+        res['rolling_mean_3'] = p.shift(1).rolling(3, min_periods=1).mean()
         res['rolling_mean_7'] = p.shift(1).rolling(7, min_periods=2).mean()
         res['rolling_mean_14'] = p.shift(1).rolling(14, min_periods=3).mean()
         res['rolling_mean_30'] = p.shift(1).rolling(30, min_periods=5).mean()
+        res['rolling_std_3'] = p.shift(1).rolling(3, min_periods=1).std().fillna(0.0)
         res['rolling_std_7'] = p.shift(1).rolling(7, min_periods=2).std().fillna(0.0)
         res['rolling_std_14'] = p.shift(1).rolling(14, min_periods=3).std().fillna(0.0)
         res['rolling_std_30'] = p.shift(1).rolling(30, min_periods=5).std().fillna(0.0)
@@ -200,27 +204,28 @@ def build_paddy_features():
         res['is_harvest_season'] = np.where(res['month'].isin([10, 11, 12, 4, 5]), 1, 0)
         res['is_monsoon_season'] = np.where(res['month'].isin([6, 7, 8, 9]), 1, 0)
 
-        clean_m = res.dropna(subset=['lag_14', 'rolling_mean_7', 'rolling_mean_30', 'target_modal_price', 'target_min_price', 'target_max_price']).reset_index(drop=True)
+        clean_m = res.dropna(subset=['lag_1', 'target_modal_price', 'target_min_price', 'target_max_price']).reset_index(drop=True)
         processed_markets.append(clean_m)
         
     final_df = pd.concat(processed_markets, ignore_index=True)
     final_df = final_df.sort_values(['date', 'Market']).reset_index(drop=True)
     
-    # Clear market one-hot dummy columns
-    market_dummies = pd.get_dummies(final_df['Market'], prefix='mkt')
-    district_dummies = pd.get_dummies(final_df['District'], prefix='dist')
-    
-    final_df = pd.concat([final_df, market_dummies, district_dummies], axis=1)
-    
+    # Save master dataset to PROJECT_ROOT and backend directory
+    master_csv_root = os.path.join(PROJECT_ROOT, "paddy_ap_master_dataset.csv")
+    final_df.to_csv(master_csv_root, index=False, encoding='utf-8-sig')
     final_df.to_csv(FEATURED_CSV, index=False, encoding='utf-8-sig')
     if LEGACY_FEATURED_CSV != FEATURED_CSV:
         final_df.to_csv(LEGACY_FEATURED_CSV, index=False, encoding='utf-8-sig')
-    print(f"  Saved Paddy(Common) featured CSV: {FEATURED_CSV}")
+
+    print(f"  ✓ Saved master dataset CSV to: {master_csv_root}")
+    print(f"  ✓ Saved featured CSV to: {FEATURED_CSV}")
     print(f"  Shape: {final_df.shape}")
     print(f"  Date range: {final_df['date'].min().strftime('%Y-%m-%d')} to {final_df['date'].max().strftime('%Y-%m-%d')}")
     print(f"  Markets included ({final_df['Market'].nunique()}): {list(final_df['Market'].unique())}")
-    print(f"  Districts included ({final_df['District'].nunique()}): {list(final_df['District'].unique())}")
     return final_df
+
+if __name__ == '__main__':
+    build_paddy_features()
 
 if __name__ == '__main__':
     build_paddy_features()

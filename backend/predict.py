@@ -139,9 +139,9 @@ def _build_model_input_frame(base_row, feature_cols, current_price, history_pric
     return model_inputs.fillna(0.0)
 
 
-def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", forecast_days=30):
+def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", forecast_days=3):
     """
-    Generate 30-day price forecast for a given market using regime-based model selection.
+    Generate 3-day price forecast for a given market using regime-based model selection.
     Supports: Auto, Prophet, ARIMA, XGBoost, GradientBoosting, Naive
     """
     script_dir = os.path.dirname(os.path.abspath(__file__))
