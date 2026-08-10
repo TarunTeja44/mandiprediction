@@ -384,16 +384,23 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", 
         ar_log_preds, _ = _generate_arima_forecast(arima_spread_models[market], forecast_horizon, exog_cols, m_df)
         spread_preds = [max(0.0, float(np.exp(p) - 1.0)) for p in ar_log_preds]
 
-    # Apply reconciliation to all forecast steps
+    # Apply residual-based error band calibration to all forecast steps
+    q10_res = float(abs(artifact.get('q10_residual', 25.0)))
+    q90_res = float(abs(artifact.get('q90_residual', 25.0)))
+    calib_band = max(25.0, (q90_res + q10_res) / 2.0)
+
     for idx, p in enumerate(predictions):
         modal_val = p['expected_weighted_avg_price']
         min_val = min_preds[idx] if idx < len(min_preds) else p['expected_trading_range'][0]
         max_val = max_preds[idx] if idx < len(max_preds) else p['expected_trading_range'][1]
         spread_val = spread_preds[idx] if idx < len(spread_preds) else (max_val - min_val)
 
-        # Post-processing reconciliation: min <= modal <= max
-        min_rec = round(min(min_val, modal_val - 1.0), 2)
-        max_rec = round(max(max_val, modal_val + 1.0), 2)
+        # Post-processing reconciliation with residual calibration: min <= modal <= max
+        min_candidate = min(min_val, modal_val - calib_band)
+        max_candidate = max(max_val, modal_val + calib_band)
+        
+        min_rec = round(min(min_candidate, modal_val - 1.0), 2)
+        max_rec = round(max(max_candidate, modal_val + 1.0), 2)
         spread_rec = round(max(0.0, max_rec - min_rec), 2)
 
         p['expected_min_price'] = min_rec

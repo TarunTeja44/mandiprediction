@@ -204,6 +204,10 @@ def build_paddy_features():
         res['is_harvest_season'] = np.where(res['month'].isin([10, 11, 12, 4, 5]), 1, 0)
         res['is_monsoon_season'] = np.where(res['month'].isin([6, 7, 8, 9]), 1, 0)
 
+        # 6. Interaction Terms for Special Days & Transport Disruption
+        res['non_trading_lag1_interaction'] = res['is_likely_non_trading_day'] * res['lag_1']
+        res['rain_arrival_interaction'] = res['heavy_rain_flag'] * res['arrival_3d_mean']
+
         clean_m = res.dropna(subset=['lag_1', 'target_modal_price', 'target_min_price', 'target_max_price']).reset_index(drop=True)
         processed_markets.append(clean_m)
         
