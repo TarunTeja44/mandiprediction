@@ -139,9 +139,9 @@ def _build_model_input_frame(base_row, feature_cols, current_price, history_pric
     return model_inputs.fillna(0.0)
 
 
-def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto"):
+def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto", forecast_days=30):
     """
-    Generate 7-day price forecast for a given market using regime-based model selection.
+    Generate 30-day price forecast for a given market using regime-based model selection.
     Supports: Auto, Prophet, ARIMA, XGBoost, GradientBoosting, Naive
     """
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -158,7 +158,7 @@ def generate_multi_market_forecast(market="Jaggampet", model_preference="Auto"):
     commodity_name = artifact.get('commodity', 'Paddy(Common)')
     target_type = artifact.get('target_type', 'Weighted Average Modal Price (60% Modal + 20% Min + 20% Max)')
     market_regimes = artifact.get('market_regimes', {})
-    forecast_horizon = artifact.get('forecast_horizon', 7)
+    forecast_horizon = forecast_days
 
     df = pd.read_csv(csv_path)
     df['date'] = pd.to_datetime(df['date'])

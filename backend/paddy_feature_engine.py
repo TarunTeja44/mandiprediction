@@ -103,6 +103,7 @@ def build_paddy_features():
         res['arrival_qty_mt'] = res['arrival_qty_mt'].fillna(0.0)
         res['arrival_lag_1'] = res['arrival_qty_mt'].shift(1).fillna(0.0)
         res['arrival_7d_mean'] = res['arrival_qty_mt'].shift(1).rolling(7, min_periods=1).mean().fillna(0.0)
+        res['arrival_30d_mean'] = res['arrival_qty_mt'].shift(1).rolling(30, min_periods=1).mean().fillna(0.0)
         res['arrival_change_pct'] = res['arrival_qty_mt'].shift(1).pct_change(1, fill_method=None).fillna(0.0).replace([np.inf, -np.inf], 0.0)
         
         # 2. HOLIDAY & MARKET CLOSURE CALENDAR
@@ -124,6 +125,7 @@ def build_paddy_features():
         res['temp_avg'] = res['temp_avg'].ffill().bfill()
         
         res['rainfall_7d'] = res['rainfall'].shift(1).rolling(7, min_periods=1).sum().fillna(0.0)
+        res['rainfall_30d'] = res['rainfall'].shift(1).rolling(30, min_periods=1).sum().fillna(0.0)
         weekly_hist_rain = res.groupby('week_of_year')['rainfall_7d'].transform('mean')
         res['rainfall_anomaly_7d'] = res['rainfall_7d'] - weekly_hist_rain
         res['heavy_rain_flag'] = np.where(res['rainfall_7d'] > 40.0, 1, 0)
