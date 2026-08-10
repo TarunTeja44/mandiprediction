@@ -113,7 +113,7 @@ def build_paddy_features():
             ((month == 10) & (day == 2)) |
             ((month == 11) & (day == 1)), 1, 0
         )
-        no_arrivals = np.where(res['arrival_qty_mt'] < 10.0, 1, 0)
+        no_arrivals = np.where(res['arrival_qty_mt'] == 0.0, 1, 0)
         res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1) | (no_arrivals == 1), 1, 0)
         
         # 3. MERGE WEATHER & RAINFALL ANOMALY
