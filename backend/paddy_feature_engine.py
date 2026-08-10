@@ -118,20 +118,53 @@ def build_paddy_features():
         no_arrivals = np.where(res['arrival_qty_mt'] == 0.0, 1, 0)
         res['is_likely_non_trading_day'] = np.where((is_sunday == 1) | (is_public_holiday == 1) | (no_arrivals == 1), 1, 0)
         
-        # 3. MERGE WEATHER & RAINFALL ANOMALY
+        # 3. MERGE WEATHER & ENHANCED AGROMET SIGNALS
         res = pd.merge(res, weather_df[['date', 'rainfall', 'temp_max', 'temp_min', 'humidity']], on='date', how='left')
-        res['temp_avg'] = (res['temp_max'] + res['temp_min']) / 2.0
         res['rainfall'] = res['rainfall'].fillna(0.0)
+        res['temp_max'] = res['temp_max'].ffill().bfill()
+        res['temp_min'] = res['temp_min'].ffill().bfill()
         res['humidity'] = res['humidity'].ffill().bfill()
-        res['temp_avg'] = res['temp_avg'].ffill().bfill()
+        res['temp_avg'] = (res['temp_max'] + res['temp_min']) / 2.0
         
+        # a) Multi-Window Lags & Cumulative Rainfall
+        res['rainfall_1d'] = res['rainfall'].shift(1).fillna(0.0)
         res['rainfall_3d'] = res['rainfall'].shift(1).rolling(3, min_periods=1).sum().fillna(0.0)
         res['rainfall_7d'] = res['rainfall'].shift(1).rolling(7, min_periods=1).sum().fillna(0.0)
+        res['rainfall_14d'] = res['rainfall'].shift(1).rolling(14, min_periods=1).sum().fillna(0.0)
         res['rainfall_30d'] = res['rainfall'].shift(1).rolling(30, min_periods=1).sum().fillna(0.0)
-        weekly_hist_rain = res.groupby('week_of_year')['rainfall_7d'].transform('mean')
-        res['rainfall_anomaly_7d'] = res['rainfall_7d'] - weekly_hist_rain
+        
+        # b) Intensity & Special Condition Counts
+        res['heavy_rain_days_7d'] = (res['rainfall'].shift(1) > 10.0).astype(float).rolling(7, min_periods=1).sum()
+        res['very_heavy_rain_days_7d'] = (res['rainfall'].shift(1) > 40.0).astype(float).rolling(7, min_periods=1).sum()
         res['heavy_rain_flag'] = np.where(res['rainfall_7d'] > 40.0, 1, 0)
+        
+        # c) Consecutive Dry Days & Dry Spell Flags
+        dry = (res['rainfall'].shift(1) < 1.0).astype(int)
+        res['consecutive_dry_days'] = dry.groupby((dry != dry.shift()).cumsum()).cumsum()
+        res['dry_spell_5d'] = (res['consecutive_dry_days'] >= 5).astype(int)
         res['dry_spell_flag'] = np.where((res['rainfall_7d'] < 1.0) & (res['month'].isin([6, 7, 8, 9])), 1, 0)
+        
+        # d) Temperature Stress & Diurnal Range
+        res['heat_stress_days_7d'] = (res['temp_max'].shift(1) > 35.0).astype(float).rolling(7, min_periods=1).sum()
+        res['cold_stress_days_7d'] = (res['temp_min'].shift(1) < 15.0).astype(float).rolling(7, min_periods=1).sum()
+        res['temp_diurnal'] = res['temp_max'] - res['temp_min']
+        res['temp_diurnal_7d_mean'] = res['temp_diurnal'].shift(1).rolling(7, min_periods=1).mean()
+        res['high_humidity_days_7d'] = (res['humidity'].shift(1) > 80.0).astype(float).rolling(7, min_periods=1).sum()
+        
+        # e) Weather Z-Score Anomalies vs Historical Calendar Norms
+        rain_hist_mean = res.groupby('week_of_year')['rainfall_7d'].transform('mean')
+        rain_hist_std = res.groupby('week_of_year')['rainfall_7d'].transform('std').fillna(1.0)
+        res['rainfall_anomaly_7d'] = res['rainfall_7d'] - rain_hist_mean
+        res['rainfall_zscore_7d'] = (res['rainfall_7d'] - rain_hist_mean) / (rain_hist_std + 1e-5)
+        
+        temp_hist_mean = res.groupby('week_of_year')['temp_max'].transform('mean')
+        temp_hist_std = res.groupby('week_of_year')['temp_max'].transform('std').fillna(1.0)
+        res['temp_max_zscore_7d'] = (res['temp_max'].shift(1) - temp_hist_mean) / (temp_hist_std + 1e-5)
+        
+        # f) Cumulative Seasonal Monsoon Rainfall (from June 1st of each Kharif year)
+        yr = res['date'].dt.year
+        res['season_year'] = np.where(res['month'] >= 6, yr, yr - 1)
+        res['season_rainfall_cum'] = res.groupby('season_year')['rainfall'].cumsum().shift(1).fillna(0.0)
         
         # 4. MERGE PROCUREMENT / MSP FLAGS
         res = pd.merge(res, procurement_df, on='date', how='left')
@@ -204,9 +237,11 @@ def build_paddy_features():
         res['is_harvest_season'] = np.where(res['month'].isin([10, 11, 12, 4, 5]), 1, 0)
         res['is_monsoon_season'] = np.where(res['month'].isin([6, 7, 8, 9]), 1, 0)
 
-        # 6. Interaction Terms for Special Days & Transport Disruption
+        # 6. Interaction Terms for Special Days, Transport & Crop-Stage Disruption
         res['non_trading_lag1_interaction'] = res['is_likely_non_trading_day'] * res['lag_1']
         res['rain_arrival_interaction'] = res['heavy_rain_flag'] * res['arrival_3d_mean']
+        res['rain_harvest_interaction'] = res['rainfall_7d'] * res['is_harvest_season']
+        res['heat_monsoon_interaction'] = res['heat_stress_days_7d'] * res['is_monsoon_season']
 
         clean_m = res.dropna(subset=['lag_1', 'target_modal_price', 'target_min_price', 'target_max_price']).reset_index(drop=True)
         processed_markets.append(clean_m)
