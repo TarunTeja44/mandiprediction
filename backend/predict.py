@@ -104,7 +104,23 @@ def _generate_arima_forecast(model, periods, exog_cols, m_df):
                 last_vals[col] = float(m_df[col].iloc[-1]) if not m_df[col].isna().all() else 0.0
             else:
                 last_vals[col] = 0.0
-        future_exog = np.tile(list(last_vals.values()), (periods, 1))
+        exog_arr = np.array(list(last_vals.values()))
+        
+        # Check statsmodels inner k_exog requirement
+        req_k = len(exog_arr)
+        if hasattr(model, 'arima_res_') and hasattr(model.arima_res_, 'model') and hasattr(model.arima_res_.model, 'k_exog'):
+            req_k = model.arima_res_.model.k_exog
+        elif hasattr(model, 'n_features_in_'):
+            req_k = model.n_features_in_
+            
+        if req_k is None or req_k == 0:
+            future_exog = None
+        else:
+            if len(exog_arr) > req_k:
+                exog_arr = exog_arr[:req_k]
+            elif len(exog_arr) < req_k:
+                exog_arr = np.pad(exog_arr, (0, req_k - len(exog_arr)), 'constant')
+            future_exog = np.tile(exog_arr, (periods, 1))
 
     forecast, conf_int = model.predict(n_periods=periods, X=future_exog, return_conf_int=True, alpha=0.20)
     return forecast, conf_int
